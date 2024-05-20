@@ -1,0 +1,85 @@
+package com.example.memorauto;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.DatePickerDialog;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.memorauto.db.entity.Vehiculo;
+
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText etNombre, etMarca, etModelo;
+    private TextView tvFecha;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        configView();
+    }
+
+    private void configView() {
+        etNombre = findViewById(R.id.etNombre);
+        etMarca = findViewById(R.id.etMarca);
+        etModelo = findViewById(R.id.etModelo);
+        tvFecha = findViewById(R.id.tvFecha);
+
+    }
+
+    public void guardar(View view) {
+        Vehiculo vehiculo = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString(), etModelo.getText().toString());
+        HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), vehiculo);
+        hiloSecundario.start();
+    }
+
+    /*
+        public void modificar(View view) {
+            Vehiculo cliente = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString());
+            cliente.setId(Integer.parseInt(etModelo.getText().toString()));
+            HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), cliente);
+            hiloSecundario.start();
+        }
+
+        public void borrar(View view) {
+            Vehiculo cliente = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString());
+            HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), cliente);
+            hiloSecundario.start();
+        }
+
+        public void buscarID(View view) {
+            Vehiculo cliente = new Vehiculo();
+            cliente.setId(Integer.parseInt(etBuscarId.getText().toString()));
+            HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), cliente);
+            hiloSecundario.start();
+        }
+
+        public void buscarNombre(View view) {
+            Vehiculo cliente = new Vehiculo();
+            cliente.setNombre(etBuscarNombre.getText().toString());
+            HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), cliente);
+            hiloSecundario.start();
+        }
+    */
+    public void mostrarTodos(View view) {
+        HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId());
+        hiloSecundario.start();
+    }
+
+    public void fechaClic(View view) {
+        DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                tvFecha.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(month) + "/" + String.valueOf(year));
+            }
+        }, 2022, 0, 15);
+        dialog.show();
+    }
+
+}
