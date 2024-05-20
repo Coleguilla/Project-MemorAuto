@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Vehiculo;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class HiloSecundario extends Thread {
@@ -58,8 +59,24 @@ public class HiloSecundario extends Thread {
         if (idBoton == R.id.btMostrarTodos) {
             List<Vehiculo> clientes = conexionBD.vehiculoRepository().findAll();
             for (Vehiculo cliente : clientes) {
-                Log.d("CONSULTA", "ID: " + cliente.getId() + " Nombre: " + cliente.getNombre() + " Marca: " + cliente.getMarca() + " Modelo: " + cliente.getModelo() + "\n");
+                if (cliente.getFecha_fabricacion() != null){
+                    int anyoFab = cliente.getFecha_fabricacion().get(Calendar.YEAR);
+                    int mesFab = cliente.getFecha_fabricacion().get(Calendar.MONTH)+1;
+                    int diaFab = cliente.getFecha_fabricacion().get(Calendar.DAY_OF_MONTH);
+                    Log.d("CONSULTA", "ID: " + cliente.getId() + " Nombre: " + cliente.getNombre() + " Marca: " + cliente.getMarca() + " Modelo: " + cliente.getModelo() +
+                            " FFabricacion: " + diaFab+"/"+mesFab+"/"+anyoFab + "\n");
+                } else {
+                    Log.d("CONSULTA", "ID: " + cliente.getId() + " Nombre: " + cliente.getNombre() + " Marca: " + cliente.getMarca() + " Modelo: " + cliente.getModelo() +
+                            " FFabricacion: " + cliente.getFecha_compra() + "\n");
+
+                }
             }
+
+               /* if (cliente.getFecha_compra() != null) {
+                    int anyoComp = cliente.getFecha_compra().get(Calendar.YEAR);
+                    int mesComp = cliente.getFecha_compra().get(Calendar.MONTH);
+                    int diaComp = cliente.getFecha_compra().get(Calendar.DAY_OF_MONTH);}
+                }*/
         }
 
     }

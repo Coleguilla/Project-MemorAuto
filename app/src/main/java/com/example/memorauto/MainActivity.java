@@ -12,11 +12,14 @@ import android.widget.TextView;
 
 import com.example.memorauto.db.entity.Vehiculo;
 
+import java.util.GregorianCalendar;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText etNombre, etMarca, etModelo;
     private TextView tvFecha;
+    GregorianCalendar gcFFabricacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void guardar(View view) {
         Vehiculo vehiculo = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString(), etModelo.getText().toString());
+        if (gcFFabricacion != null) vehiculo.setFecha_fabricacion(gcFFabricacion);
         HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), vehiculo);
         hiloSecundario.start();
     }
@@ -75,10 +79,11 @@ public class MainActivity extends AppCompatActivity {
     public void fechaClic(View view) {
         DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                tvFecha.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(month) + "/" + String.valueOf(year));
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                tvFecha.setText(String.valueOf(day) + "/" + String.valueOf(month+1) + "/" + String.valueOf(year));
+                gcFFabricacion = new GregorianCalendar(year, month, day);
             }
-        }, 2022, 0, 15);
+        }, 2024, 4, 20);
         dialog.show();
     }
 
