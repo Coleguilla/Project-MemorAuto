@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_favorite) {
-            Log.d("PRUEBA", "funciona" );
+            Intent i = new Intent(this, NuevoVehiculoActivity.class );
+            startActivity(i);
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
+        android:id="@+id/my_toolbar2"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -18,25 +18,25 @@
 
 
     <EditText
-        android:id="@+id/etNombre"
+        android:id="@+id/etNombre2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:hint="Nombre" />
 
     <EditText
-        android:id="@+id/etMarca"
+        android:id="@+id/etMarca2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:hint="Marca" />
 
     <EditText
-        android:id="@+id/etModelo"
+        android:id="@+id/etModelo2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:hint="Modelo" />
 
     <TextView
-        android:id="@+id/tvFecha"
+        android:id="@+id/tvFecha2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:hint="fecha"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btGuardar"
+            android:id="@+id/btGuardar2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -69,7 +69,7 @@
         android:layout_height="20dp" />
 
     <Button
-        android:id="@+id/btMostrarTodos"
+        android:id="@+id/btMostrarTodos2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="mostrarTodos"
