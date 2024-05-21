@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- "Mark Favorite", must appear as action button if possible. -->
     <item
-        android:id="@+id/mNuevoVehiculo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:title="Nuevo vehículo" />
+        android:id="@+id/action_favorite"
+        android:icon="@android:drawable/btn_star_big_on"
+        android:title="action_favorite"
+        app:showAsAction="ifRoom" />
+
 </menu>
