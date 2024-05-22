@@ -5,9 +5,6 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/bluepetrol</item>
-        <!-- <item name="colorButtonNormal">@color/bluepetrol</item> -->
-
-
     </style>
 
     <style name="Theme.MemorAuto" parent="Base.Theme.MemorAuto" />

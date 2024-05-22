@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegistroVehiculoActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/arv_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <TextView
+        android:id="@+id/arv_tv_nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre" />
+
+    <EditText
+        android:id="@+id/arv_et_nombre"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <TextView
+        android:id="@+id/arv_tv_marca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Marca" />
+
+    <EditText
+        android:id="@+id/arv_et_marca"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <TextView
+        android:id="@+id/arv_tv_modelo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Modelo" />
+
+    <EditText
+        android:id="@+id/arv_et_modelo"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <TextView
+        android:id="@+id/arv_tv_fechafabricacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha de fabricación" />
+
+    <EditText
+        android:id="@+id/arv_et_fechafabricacion"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:onClick="fecha" />
+
+    <TextView
+        android:id="@+id/arv_tv_fechacompra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha de compra" />
+
+    <EditText
+        android:id="@+id/arv_et_fechacompra"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:onClick="fecha" />
+
+    <Button
+        android:id="@+id/arv_bt_registrar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="REGISTRAR" />
+
+</LinearLayout>
