@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -73,9 +72,8 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
         Vehiculo vehiculo = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString(), etModelo.getText().toString());
         if (gcFFabricacion != null) vehiculo.setFecha_fabricacion(gcFFabricacion);
         if (gcFCompra != null) vehiculo.setFecha_compra(gcFCompra);
-        Log.d("PRUEBA", "ID: " + vehiculo.getId() + " Nombre: " + vehiculo.getNombre() + " Marca: " + vehiculo.getMarca() + " Modelo: " + vehiculo.getModelo() +
-                " FFabricacion: " + vehiculo.getFecha_fabricacion() + " FCompra: " + vehiculo.getFecha_compra() + "\n");
         HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), vehiculo);
         hiloSecundario.start();
+        finish();
     }
 }

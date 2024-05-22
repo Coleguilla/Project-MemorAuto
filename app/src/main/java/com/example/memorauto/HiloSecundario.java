@@ -13,23 +13,23 @@ public class HiloSecundario extends Thread {
 
     public Context context;
     public int idBoton;
-    public Vehiculo cliente;
+    public Vehiculo vehiculo;
 
     public HiloSecundario(Context context, int idBoton) {
         this.context = context;
         this.idBoton = idBoton;
     }
 
-    public HiloSecundario(Context context, int idBoton, Vehiculo cliente) {
+    public HiloSecundario(Context context, int idBoton, Vehiculo vehiculo) {
         this.context = context;
         this.idBoton = idBoton;
-        this.cliente = cliente;
+        this.vehiculo = vehiculo;
     }
 
     public void run() {
         AppDatabase conexionBD = AppDatabase.getAppDb(context);
         if (idBoton == R.id.arv_bt_registrar) {
-            conexionBD.vehiculoRepository().insert(cliente);
+            conexionBD.vehiculoRepository().insert(vehiculo);
         }
 /*
         if (idBoton == R.id.btModificar) {
@@ -56,27 +56,22 @@ public class HiloSecundario extends Thread {
         }
 */
         if (idBoton == R.id.btMostrarTodos) {
-            List<Vehiculo> clientes = conexionBD.vehiculoRepository().findAll();
-            for (Vehiculo cliente : clientes) {
-                if (cliente.getFecha_fabricacion() != null){
-                    int anyoFab = cliente.getFecha_fabricacion().get(Calendar.YEAR);
-                    int mesFab = cliente.getFecha_fabricacion().get(Calendar.MONTH)+1;
-                    int diaFab = cliente.getFecha_fabricacion().get(Calendar.DAY_OF_MONTH);
-                    Log.d("CONSULTA", "ID: " + cliente.getId() + " Nombre: " + cliente.getNombre() + " Marca: " + cliente.getMarca() + " Modelo: " + cliente.getModelo() +
-                            " FFabricacion: " + diaFab+"/"+mesFab+"/"+anyoFab + "\n");
+            List<Vehiculo> vehiculos = conexionBD.vehiculoRepository().findAll();
+            for (Vehiculo vehiculo : vehiculos) {
+                if (vehiculo.getFecha_fabricacion() != null && vehiculo.getFecha_compra() != null) {
+                    int anyoFab = vehiculo.getFecha_fabricacion().get(Calendar.YEAR);
+                    int mesFab = vehiculo.getFecha_fabricacion().get(Calendar.MONTH) + 1;
+                    int diaFab = vehiculo.getFecha_fabricacion().get(Calendar.DAY_OF_MONTH);
+                    int anyoComp = vehiculo.getFecha_compra().get(Calendar.YEAR);
+                    int mesComp = vehiculo.getFecha_compra().get(Calendar.MONTH) + 1;
+                    int diaComp = vehiculo.getFecha_compra().get(Calendar.DAY_OF_MONTH);
+                    Log.d("CONSULTA", "ID: " + vehiculo.getId() + " |Nombre: " + vehiculo.getNombre() + " |Marca: " + vehiculo.getMarca() + " |Modelo: " + vehiculo.getModelo() +
+                            " |FFabricacion: " + diaFab + "/" + mesFab + "/" + anyoFab + " |FCompra: " + diaComp + "/" + mesComp + "/" + anyoComp + "\n");
                 } else {
-                    Log.d("CONSULTA", "ID: " + cliente.getId() + " Nombre: " + cliente.getNombre() + " Marca: " + cliente.getMarca() + " Modelo: " + cliente.getModelo() +
-                            " FFabricacion: " + cliente.getFecha_compra() + "\n");
-
+                    Log.d("CONSULTA", "ID: " + vehiculo.getId() + " |Nombre: " + vehiculo.getNombre() + " |Marca: " + vehiculo.getMarca() + " |Modelo: " + vehiculo.getModelo() +
+                            " |FFabricacion: sin datos |FCompra: sin datos " + "\n");
                 }
             }
-
-               /* if (cliente.getFecha_compra() != null) {
-                    int anyoComp = cliente.getFecha_compra().get(Calendar.YEAR);
-                    int mesComp = cliente.getFecha_compra().get(Calendar.MONTH);
-                    int diaComp = cliente.getFecha_compra().get(Calendar.DAY_OF_MONTH);}
-                }*/
         }
-
     }
 }
