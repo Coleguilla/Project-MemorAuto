@@ -28,8 +28,7 @@ public class HiloSecundario extends Thread {
 
     public void run() {
         AppDatabase conexionBD = AppDatabase.getAppDb(context);
-
-        if (idBoton == R.id.btGuardar) {
+        if (idBoton == R.id.arv_bt_registrar) {
             conexionBD.vehiculoRepository().insert(cliente);
         }
 /*

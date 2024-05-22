@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".RegistroVehiculoActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -14,73 +13,145 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <TextView
         android:id="@+id/arv_tv_nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nombre" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="16dp"
+        android:text="Nombre"
+        app:layout_constraintBottom_toTopOf="@+id/arv_et_nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arv_toolbar"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
         android:id="@+id/arv_et_nombre"
         android:layout_width="match_parent"
-        android:layout_height="60dp" />
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/arv_tv_marca"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/arv_tv_nombre" />
 
     <TextView
         android:id="@+id/arv_tv_marca"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Marca" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Marca"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arv_et_nombre"
+        app:layout_constraintBottom_toTopOf="@+id/arv_et_marca" />
 
     <EditText
         android:id="@+id/arv_et_marca"
         android:layout_width="match_parent"
-        android:layout_height="60dp" />
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arv_tv_marca"
+        app:layout_constraintBottom_toTopOf="@+id/arv_tv_modelo" />
 
     <TextView
         android:id="@+id/arv_tv_modelo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Modelo" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Modelo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arv_et_marca"
+        app:layout_constraintBottom_toTopOf="@+id/arv_et_modelo"/>
 
     <EditText
         android:id="@+id/arv_et_modelo"
         android:layout_width="match_parent"
-        android:layout_height="60dp" />
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arv_tv_modelo"
+        app:layout_constraintBottom_toTopOf="@+id/arv_tv_fechafabricacion"/>
 
     <TextView
         android:id="@+id/arv_tv_fechafabricacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fecha de fabricación" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Fecha de fabricación"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arv_et_modelo"
+        app:layout_constraintBottom_toTopOf="@+id/arv_et_fechafabricacion"/>
 
     <EditText
         android:id="@+id/arv_et_fechafabricacion"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:onClick="fecha" />
+        android:onClick="selectFFabricacion"
+        app:layout_constraintBottom_toTopOf="@+id/arv_tv_fechacompra"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arv_tv_fechafabricacion" />
 
     <TextView
         android:id="@+id/arv_tv_fechacompra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fecha de compra" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Fecha de compra"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arv_et_fechafabricacion"
+        app:layout_constraintBottom_toTopOf="@+id/arv_et_fechacompra"/>
 
     <EditText
         android:id="@+id/arv_et_fechacompra"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:onClick="fecha" />
+        android:onClick="selectFCompra"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arv_tv_fechacompra"
+        app:layout_constraintBottom_toTopOf="@+id/arv_bt_registrar"/>
 
     <Button
         android:id="@+id/arv_bt_registrar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="REGISTRAR" />
+        android:layout_marginTop="46dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="REGISTRAR"
+        android:onClick="registroVehiculo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arv_et_fechacompra" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

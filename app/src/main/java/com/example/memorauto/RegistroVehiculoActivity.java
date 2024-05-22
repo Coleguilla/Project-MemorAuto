@@ -5,16 +5,21 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
+import com.example.memorauto.db.entity.Vehiculo;
+
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class RegistroVehiculoActivity extends AppCompatActivity {
 
     private EditText etNombre, etMarca, etModelo, etFechaFabricacion, etFechaCompra;
+    GregorianCalendar gcFFabricacion, gcFCompra;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,13 +27,14 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
         configToolbar();
         configView();
     }
-    
+
     private void configToolbar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.arv_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Registro de vehículo");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     private void configView() {
         etNombre = findViewById(R.id.arv_et_nombre);
         etMarca = findViewById(R.id.arv_et_marca);
@@ -36,14 +42,40 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
         etFechaFabricacion = findViewById(R.id.arv_et_fechafabricacion);
         etFechaCompra = findViewById(R.id.arv_et_fechacompra);
     }
-    public void fecha(View view) {
+
+    public void selectFFabricacion(View view) {
+        gcFFabricacion = new GregorianCalendar();
         DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                etFechaFabricacion.setText(String.valueOf(day) + "/" + String.valueOf(month+1) + "/" + String.valueOf(year));
-                //gcFFabricacion = new GregorianCalendar(year, month, day);
+                etFechaFabricacion.setText(String.valueOf(day) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
+                gcFFabricacion = new GregorianCalendar(year, month, day);
+
             }
-        }, 2024, 4, 20);
+        }, gcFFabricacion.get(Calendar.YEAR), gcFFabricacion.get(Calendar.MONTH), gcFFabricacion.get(Calendar.DAY_OF_MONTH));
         dialog.show();
+    }
+
+    public void selectFCompra(View view) {
+        gcFCompra = new GregorianCalendar();
+        DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                etFechaCompra.setText(String.valueOf(day) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
+                gcFCompra = new GregorianCalendar(year, month, day);
+
+            }
+        }, gcFCompra.get(Calendar.YEAR), gcFCompra.get(Calendar.MONTH), gcFCompra.get(Calendar.DAY_OF_MONTH));
+        dialog.show();
+    }
+
+    public void registroVehiculo(View view) {
+        Vehiculo vehiculo = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString(), etModelo.getText().toString());
+        if (gcFFabricacion != null) vehiculo.setFecha_fabricacion(gcFFabricacion);
+        if (gcFCompra != null) vehiculo.setFecha_compra(gcFCompra);
+        Log.d("PRUEBA", "ID: " + vehiculo.getId() + " Nombre: " + vehiculo.getNombre() + " Marca: " + vehiculo.getMarca() + " Modelo: " + vehiculo.getModelo() +
+                " FFabricacion: " + vehiculo.getFecha_fabricacion() + " FCompra: " + vehiculo.getFecha_compra() + "\n");
+        HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), vehiculo);
+        hiloSecundario.start();
     }
 }
