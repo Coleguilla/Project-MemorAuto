@@ -6,4 +6,7 @@
     <color name="bluepetrol">#027C90</color>
     <color name="bluemedium">#A9DEE7</color>
     <color name="bluelight">#DDF2F5</color>
+
+    <color name="red">#D30000</color>
+    <color name="yellow">#FFFF00</color>
 </resources>

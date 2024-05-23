@@ -10,7 +10,7 @@
         android:id="@+id/arv_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="?attr/colorOnPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,13 +143,14 @@
 
     <Button
         android:id="@+id/arv_bt_registrar"
+        style="@style/ButtonAppTheme"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="46dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="46dp"
         android:layout_marginEnd="16dp"
-        android:text="REGISTRAR"
         android:onClick="registroVehiculo"
+        android:text="REGISTRAR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/arv_et_fechacompra" />

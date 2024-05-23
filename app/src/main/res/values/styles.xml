@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppTheme" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/bluepetrol</item>
+    </style>
+    <style name="EditTextAppTheme" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/bluepetrol</item>
+        <item name="backgroundTint">@color/bluepetrol</item>
+    </style>
+    <style name="ButtonAppTheme" parent="Widget.Material3.Button">
+        <item name="android:textSize">20dp</item>
+    </style>
+</resources>

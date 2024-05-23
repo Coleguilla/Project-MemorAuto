@@ -4,7 +4,12 @@
         <!-- Theme.AppCompat.Light.DarkActionBar -->
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="colorPrimary">@color/bluepetrol</item>
+        <item name="colorPrimary">@color/bluemedium</item>
+        <item name="colorOnPrimary">@color/bluepetrol</item>
+
+        <item name="android:textViewStyle">@style/TextAppTheme</item>
+        <item name="editTextStyle">@style/EditTextAppTheme</item>
+
     </style>
 
     <style name="Theme.MemorAuto" parent="Base.Theme.MemorAuto" />
