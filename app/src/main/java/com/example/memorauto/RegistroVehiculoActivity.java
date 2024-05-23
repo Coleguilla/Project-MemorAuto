@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -49,7 +50,6 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 etFechaFabricacion.setText(String.valueOf(day) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
                 gcFFabricacion = new GregorianCalendar(year, month, day);
-
             }
         }, gcFFabricacion.get(Calendar.YEAR), gcFFabricacion.get(Calendar.MONTH), gcFFabricacion.get(Calendar.DAY_OF_MONTH));
         dialog.show();
@@ -62,18 +62,20 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 etFechaCompra.setText(String.valueOf(day) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
                 gcFCompra = new GregorianCalendar(year, month, day);
-
             }
         }, gcFCompra.get(Calendar.YEAR), gcFCompra.get(Calendar.MONTH), gcFCompra.get(Calendar.DAY_OF_MONTH));
         dialog.show();
     }
 
-    public void registroVehiculo(View view) {
+    public void registrarVehiculo(View view) {
         Vehiculo vehiculo = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString(), etModelo.getText().toString());
         if (gcFFabricacion != null) vehiculo.setFecha_fabricacion(gcFFabricacion);
         if (gcFCompra != null) vehiculo.setFecha_compra(gcFCompra);
         HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), vehiculo);
         hiloSecundario.start();
+
         finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

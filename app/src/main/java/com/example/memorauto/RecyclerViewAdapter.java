@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memorauto.db.entity.Vehiculo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
     Context context;
-    ArrayList<Vehiculo> vehiculos;
+    List<Vehiculo> vehiculos;
 
-    public RecyclerViewAdapter(Context context, ArrayList<Vehiculo> vehiculos) {
+    public RecyclerViewAdapter(Context context, List<Vehiculo> vehiculos) {
         this.context = context;
         this.vehiculos = vehiculos;
     }
@@ -45,7 +45,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-
         TextView tvNombre, tvMarca, tvModelo;
         ImageView ivAuto;
 

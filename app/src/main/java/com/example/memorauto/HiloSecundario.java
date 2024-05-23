@@ -1,23 +1,30 @@
 package com.example.memorauto;
 
 import android.content.Context;
-import android.util.Log;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Vehiculo;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class HiloSecundario extends Thread {
 
     public Context context;
+    public RecyclerView recyclerView;
     public int idBoton;
     public Vehiculo vehiculo;
 
     public HiloSecundario(Context context, int idBoton) {
         this.context = context;
         this.idBoton = idBoton;
+    }
+    public HiloSecundario(Context context, int idBoton, RecyclerView recyclerView) {
+        this.context = context;
+        this.idBoton = idBoton;
+        this.recyclerView = recyclerView;
     }
 
     public HiloSecundario(Context context, int idBoton, Vehiculo vehiculo) {
@@ -28,6 +35,7 @@ public class HiloSecundario extends Thread {
 
     public void run() {
         AppDatabase conexionBD = AppDatabase.getAppDb(context);
+
         if (idBoton == R.id.arv_bt_registrar) {
             conexionBD.vehiculoRepository().insert(vehiculo);
         }
@@ -54,7 +62,7 @@ public class HiloSecundario extends Thread {
             cliente = conexionBD.vehiculoRepository().findByName(cliente.getNombre());
             Log.d("CONSULTA", "ID: " + cliente.getId() + " Nombre: " + cliente.getNombre() + " Password: " + cliente.getMarca() + "\n");
         }
-*/
+
         if (idBoton == R.id.btMostrarTodos) {
             List<Vehiculo> vehiculos = conexionBD.vehiculoRepository().findAll();
             for (Vehiculo vehiculo : vehiculos) {
@@ -73,5 +81,13 @@ public class HiloSecundario extends Thread {
                 }
             }
         }
+*/
+        if (idBoton == 1) {
+            List<Vehiculo> vehiculos = conexionBD.vehiculoRepository().findAll();
+            RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, vehiculos);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        }
+
     }
 }

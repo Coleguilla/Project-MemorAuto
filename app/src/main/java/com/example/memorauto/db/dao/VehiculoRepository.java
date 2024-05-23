@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import com.example.memorauto.db.entity.Vehiculo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
