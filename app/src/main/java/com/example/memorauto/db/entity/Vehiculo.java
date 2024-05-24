@@ -5,11 +5,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 
 @Entity(tableName = "TVehiculos")
-public class Vehiculo {
+public class Vehiculo implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String nombre;

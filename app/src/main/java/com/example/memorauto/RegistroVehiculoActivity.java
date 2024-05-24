@@ -18,7 +18,7 @@ import java.util.GregorianCalendar;
 public class RegistroVehiculoActivity extends AppCompatActivity {
 
     private EditText etNombre, etMarca, etModelo, etFechaFabricacion, etFechaCompra;
-    GregorianCalendar gcFFabricacion, gcFCompra;
+    private GregorianCalendar gcFFabricacion, gcFCompra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

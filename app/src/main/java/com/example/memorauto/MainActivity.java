@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(int position) {
             Intent intent = new Intent(MainActivity.this, VehiculoActivity.class);
-            intent.putExtra("hola", vehiculos.get(position).getId());
+            intent.putExtra("hola", vehiculos.get(position));
             startActivity(intent);
         }
     }
