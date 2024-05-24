@@ -13,18 +13,12 @@ import java.util.List;
 public class HiloSecundario extends Thread {
 
     public Context context;
-    public RecyclerView recyclerView;
     public int idBoton;
     public Vehiculo vehiculo;
 
     public HiloSecundario(Context context, int idBoton) {
         this.context = context;
         this.idBoton = idBoton;
-    }
-    public HiloSecundario(Context context, int idBoton, RecyclerView recyclerView) {
-        this.context = context;
-        this.idBoton = idBoton;
-        this.recyclerView = recyclerView;
     }
 
     public HiloSecundario(Context context, int idBoton, Vehiculo vehiculo) {
@@ -39,7 +33,7 @@ public class HiloSecundario extends Thread {
         if (idBoton == R.id.arv_bt_registrar) {
             conexionBD.vehiculoRepository().insert(vehiculo);
         }
-/*
+        /*
         if (idBoton == R.id.btModificar) {
             Vehiculo clienteAModificar = conexionBD.vehiculoRepository().findById(cliente.getId());
             clienteAModificar.setNombre(cliente.getNombre());
@@ -80,14 +74,7 @@ public class HiloSecundario extends Thread {
                             " |FFabricacion: sin datos |FCompra: sin datos " + "\n");
                 }
             }
-        }
-*/
-        if (idBoton == 1) {
-            List<Vehiculo> vehiculos = conexionBD.vehiculoRepository().findAll();
-            RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, vehiculos);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        }
+        }*/
 
     }
 }

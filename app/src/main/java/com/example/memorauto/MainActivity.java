@@ -3,23 +3,33 @@ package com.example.memorauto;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.memorauto.db.database.AppDatabase;
+import com.example.memorauto.db.entity.Vehiculo;
+
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    List<Vehiculo> vehiculos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         configToolbar();
-        RecyclerView recyclerView = findViewById(R.id.am_recyclerview);
-        cargarRecyclerview(recyclerView);
+        LeerVehiculos leerVehiculos = new LeerVehiculos();
+        leerVehiculos.execute();
     }
 
     private void configToolbar() {
@@ -44,9 +54,28 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void cargarRecyclerview(RecyclerView recyclerView) {
-        HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), 1, recyclerView);
-        hiloSecundario.start();
+
+    private class LeerVehiculos extends AsyncTask<Void, Void, List<Vehiculo>> implements RecyclerViewInterface{
+        @Override
+        protected List<Vehiculo> doInBackground(Void... voids) {
+            vehiculos = AppDatabase.getAppDb(getApplicationContext()).vehiculoRepository().findAll();
+            return vehiculos;
+        }
+
+        @Override
+        protected void onPostExecute(List<Vehiculo> vehiculos) {
+            RecyclerView recyclerView = findViewById(R.id.am_recyclerview);
+            RecyclerViewAdapter adapter = new RecyclerViewAdapter(getApplicationContext(), vehiculos, this);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        }
+
+        @Override
+        public void onItemClick(int position) {
+            Intent intent = new Intent(MainActivity.this, VehiculoActivity.class);
+            intent.putExtra("hola", vehiculos.get(position).getId());
+            startActivity(intent);
+        }
     }
 
     /*

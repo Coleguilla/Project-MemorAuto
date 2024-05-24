@@ -17,10 +17,12 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
     Context context;
     List<Vehiculo> vehiculos;
+    private final RecyclerViewInterface recyclerViewInterface;
 
-    public RecyclerViewAdapter(Context context, List<Vehiculo> vehiculos) {
+    public RecyclerViewAdapter(Context context, List<Vehiculo> vehiculos, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.vehiculos = vehiculos;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
     @NonNull
@@ -28,7 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_view_vehiculo, parent, false);
-        return new RecyclerViewAdapter.MyViewHolder(view);
+        return new RecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
     }
 
     @Override
@@ -48,12 +50,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView tvNombre, tvMarca, tvModelo;
         ImageView ivAuto;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.rvv_tv_nombre);
             tvMarca = itemView.findViewById(R.id.rvv_tv_marca);
             tvModelo = itemView.findViewById(R.id.rvv_tv_modelo);
             ivAuto = itemView.findViewById(R.id.rvv_imageview);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (recyclerViewInterface != null){
+                        int pos = getAdapterPosition();
+                        if(pos != RecyclerView.NO_POSITION) {
+                            recyclerViewInterface.onItemClick(pos);
+                        }
+                    }
+
+                }
+            });
         }
     }
 }
