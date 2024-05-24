@@ -6,9 +6,11 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.memorauto.db.entity.Vehiculo;
 
@@ -68,14 +70,19 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
     }
 
     public void registrarVehiculo(View view) {
-        Vehiculo vehiculo = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString(), etModelo.getText().toString());
-        if (gcFFabricacion != null) vehiculo.setFecha_fabricacion(gcFFabricacion);
-        if (gcFCompra != null) vehiculo.setFecha_compra(gcFCompra);
-        HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), vehiculo);
-        hiloSecundario.start();
+        if (etNombre.getText().toString().equals("") | etMarca.getText().toString().equals("") | etModelo.getText().toString().equals("")) {
+            Toast.makeText(this, "NOMBRE, MARCA y MODELO son obligatorios para registrar un vehículo", Toast.LENGTH_LONG).show();
+        } else {
+            Vehiculo vehiculo = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString(), etModelo.getText().toString());
+            if (gcFFabricacion != null) vehiculo.setFecha_fabricacion(gcFFabricacion);
+            if (gcFCompra != null) vehiculo.setFecha_compra(gcFCompra);
+            HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), vehiculo);
+            hiloSecundario.start();
 
-        finish();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+            finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
     }
 }

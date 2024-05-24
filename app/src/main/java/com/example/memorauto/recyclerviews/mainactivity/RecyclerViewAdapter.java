@@ -1,4 +1,4 @@
-package com.example.memorauto;
+package com.example.memorauto.recyclerviews.mainactivity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.memorauto.R;
 import com.example.memorauto.db.entity.Vehiculo;
 
 import java.util.List;

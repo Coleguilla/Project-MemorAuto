@@ -9,19 +9,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Vehiculo;
+import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewAdapter;
+import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewInterface;
 
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    List<Vehiculo> vehiculos;
+    private List<Vehiculo> vehiculos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private class LeerVehiculos extends AsyncTask<Void, Void, List<Vehiculo>> implements RecyclerViewInterface{
+    private class LeerVehiculos extends AsyncTask<Void, Void, List<Vehiculo>> implements RecyclerViewInterface {
         @Override
         protected List<Vehiculo> doInBackground(Void... voids) {
             vehiculos = AppDatabase.getAppDb(getApplicationContext()).vehiculoRepository().findAll();
@@ -73,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(int position) {
             Intent intent = new Intent(MainActivity.this, VehiculoActivity.class);
-            intent.putExtra("hola", vehiculos.get(position));
+            intent.putExtra("selectedVehicle", vehiculos.get(position));
             startActivity(intent);
         }
     }
-
+}
     /*
         public void modificar(View view) {
             Vehiculo cliente = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString());
@@ -111,4 +112,4 @@ public class MainActivity extends AppCompatActivity {
             hiloSecundario.start();
         }
     */
-}
+
