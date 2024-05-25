@@ -3,10 +3,12 @@ package com.example.memorauto.db.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 
 @Entity(tableName = "TVehiculos")
@@ -18,6 +20,8 @@ public class Vehiculo implements Serializable {
     private String modelo;
     private GregorianCalendar fecha_fabricacion;
     private GregorianCalendar fecha_compra;
+    @Ignore
+    private List<Mantenimiento> mantenimientos;
 
     //...
 
@@ -44,7 +48,6 @@ public class Vehiculo implements Serializable {
     }
 
     //...
-
 
     public int getId() {
         return id;
@@ -92,5 +95,13 @@ public class Vehiculo implements Serializable {
 
     public void setFecha_compra(GregorianCalendar fecha_compra) {
         this.fecha_compra = fecha_compra;
+    }
+
+    public List<Mantenimiento> getMantenimientos() {
+        return mantenimientos;
+    }
+
+    public void setMantenimientos(List<Mantenimiento> mantenimientos) {
+        this.mantenimientos = mantenimientos;
     }
 }
