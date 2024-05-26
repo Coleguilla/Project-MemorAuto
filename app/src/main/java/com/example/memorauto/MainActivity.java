@@ -9,10 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.memorauto.db.database.AppDatabase;
+import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.db.entity.Vehiculo;
 import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewAdapter;
 import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewInterface;
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     private class LeerVehiculos extends AsyncTask<Void, Void, List<Vehiculo>> implements RecyclerViewInterface {
         @Override
         protected List<Vehiculo> doInBackground(Void... voids) {
@@ -74,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(int position) {
             Intent intent = new Intent(MainActivity.this, VehiculoActivity.class);
-            intent.putExtra("selectedVehicle", vehiculos.get(position));
+            intent.putExtra("selectedVehicle", vehiculos.get(position).getId()); //REVISTAR ESTO
             startActivity(intent);
         }
     }

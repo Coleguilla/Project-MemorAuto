@@ -1,6 +1,7 @@
 package com.example.memorauto;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,13 @@ public class HiloSecundario extends Thread {
 
         if (idBoton == R.id.arm_bt_registrar) {
             conexionBD.mantenimientoRepository().insert(mantenimiento);
+        }
+
+        if (idBoton == R.id.button) {
+
+            List<Mantenimiento> lm = conexionBD.mantenimientoRepository().findAll();
+            for (int i = 0; i<lm.size(); i++){
+                Log.d("TEST", "Nombre: "+lm.get(i).getNombre()+" vehiculoId: "+String.valueOf(lm.get(i).getVehiculoId()) );}
         }
         /*
         if (idBoton == R.id.btModificar) {

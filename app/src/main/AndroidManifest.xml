@@ -13,13 +13,17 @@
         android:theme="@style/Theme.MemorAuto"
         tools:targetApi="31">
         <activity
+            android:name=".RecordatoriosActivity"
+            android:exported="false"
+            android:parentActivityName=".MantenimientosActivity" />
+        <activity
             android:name=".RegistroMantenimientoActivity"
             android:exported="false"
             android:parentActivityName=".MantenimientosActivity" />
         <activity
             android:name=".MantenimientosActivity"
             android:exported="false"
-            android:parentActivityName=".VehiculoActivity" />/>
+            android:parentActivityName=".VehiculoActivity" />
         <activity
             android:name=".VehiculoActivity"
             android:exported="false"

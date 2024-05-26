@@ -12,10 +12,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.memorauto.db.database.AppDatabase;
+import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.db.entity.Vehiculo;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class RegistroVehiculoActivity extends AppCompatActivity {
 
@@ -67,6 +70,11 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
             }
         }, gcFCompra.get(Calendar.YEAR), gcFCompra.get(Calendar.MONTH), gcFCompra.get(Calendar.DAY_OF_MONTH));
         dialog.show();
+    }
+
+    public void botonPrueba(View view){
+        HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId());
+        hiloSecundario.start();
     }
 
     public void registrarVehiculo(View view) {

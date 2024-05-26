@@ -11,18 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memorauto.R;
-import com.example.memorauto.db.entity.Vehiculo;
+import com.example.memorauto.db.entity.Mantenimiento;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class RecyclerViewAdapterMantenimientos extends RecyclerView.Adapter<RecyclerViewAdapterMantenimientos.MyViewHolder> {
     Context context;
-    List<Vehiculo> vehiculos;
+    List<Mantenimiento> mantenimientos;
     private final RecyclerViewInterfaceMantenimientos recyclerViewInterfaceMantenimientos;
 
-    public RecyclerViewAdapterMantenimientos(Context context, List<Vehiculo> vehiculos, RecyclerViewInterfaceMantenimientos recyclerViewInterfaceMantenimientos) {
+    public RecyclerViewAdapterMantenimientos(Context context, List<Mantenimiento> mantenimientos, RecyclerViewInterfaceMantenimientos recyclerViewInterfaceMantenimientos) {
         this.context = context;
-        this.vehiculos = vehiculos;
+        this.mantenimientos = mantenimientos;
         this.recyclerViewInterfaceMantenimientos = recyclerViewInterfaceMantenimientos;
     }
 
@@ -30,33 +31,36 @@ public class RecyclerViewAdapterMantenimientos extends RecyclerView.Adapter<Recy
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycler_view_vehiculo, parent, false);
+        View view = inflater.inflate(R.layout.recycler_view_mantenimiento, parent, false);
         return new MyViewHolder(view, recyclerViewInterfaceMantenimientos);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.tvNombre.setText(vehiculos.get(position).getNombre());
-        holder.tvMarca.setText(vehiculos.get(position).getMarca());
-        holder.tvModelo.setText(vehiculos.get(position).getModelo());
-        holder.ivAuto.setImageResource(R.drawable.icon_car);
+        holder.tvNombre.setText(mantenimientos.get(position).getNombre());
+        holder.tvTipo.setText(mantenimientos.get(position).getTipo());
+        String cadenaFecha = mantenimientos.get(position).getFecha().get(Calendar.DAY_OF_MONTH)+"/"+(mantenimientos.get(position).getFecha().get(Calendar.MONTH) + 1)+"/"+mantenimientos.get(position).getFecha().get(Calendar.YEAR);
+        holder.tvFecha.setText(cadenaFecha);
+        holder.tvOdometro.setText(String.valueOf(mantenimientos.get(position).getOdometro()));
+        //holder.ivAuto.setImageResource(R.drawable.icon_car);
     }
 
     @Override
     public int getItemCount() {
-        return vehiculos.size();
+        return mantenimientos.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNombre, tvMarca, tvModelo;
-        ImageView ivAuto;
+        TextView tvNombre, tvTipo, tvFecha, tvOdometro;
+        //ImageView ivAuto;
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterfaceMantenimientos recyclerViewInterfaceMantenimientos) {
             super(itemView);
-            tvNombre = itemView.findViewById(R.id.rvv_tv_nombre);
-            tvMarca = itemView.findViewById(R.id.rvv_tv_marca);
-            tvModelo = itemView.findViewById(R.id.rvv_tv_modelo);
-            ivAuto = itemView.findViewById(R.id.rvv_imageview);
+            tvNombre = itemView.findViewById(R.id.rvm_tv_nombre);
+            tvTipo = itemView.findViewById(R.id.rvm_tv_tipo);
+            tvFecha = itemView.findViewById(R.id.rvm_tv_fecha);
+            tvOdometro = itemView.findViewById(R.id.rvm_tv_odometro);
+            //ivAuto = itemView.findViewById(R.id.rvv_imageview);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -15,4 +15,7 @@ public interface MantenimientoRepository {
 
     @Query("SELECT * FROM TMantenimientos where vehiculoId LIKE :vehiculoId")
     List<Mantenimiento> findByVehiculoId(int vehiculoId);
+
+    @Query("SELECT * FROM TMantenimientos")
+    List<Mantenimiento> findAll();
 }

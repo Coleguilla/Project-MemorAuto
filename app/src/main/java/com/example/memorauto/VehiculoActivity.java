@@ -2,13 +2,23 @@ package com.example.memorauto;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
+import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Vehiculo;
+import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewAdapter;
+import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewInterface;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class VehiculoActivity extends AppCompatActivity {
 
@@ -16,15 +26,17 @@ public class VehiculoActivity extends AppCompatActivity {
     private Vehiculo vehiculo;
     private String cadenaFFabricacion;
     private String cadenaFCompra;
+    public int idVehiculo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehiculo);
-        vehiculo = (Vehiculo) getIntent().getSerializableExtra("selectedVehicle");
+        idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
         configToolbar();
         configView();
         rellenarFicha();
+        Log.d("TEST", String.valueOf(idVehiculo));
     }
 
     private void rellenarFicha() {
@@ -49,9 +61,37 @@ public class VehiculoActivity extends AppCompatActivity {
     }
 
     private void configView() {
-        tvMarca = findViewById(R.id.av_tv_marca);
-        tvModelo = findViewById(R.id.av_tv_modelo);
-        tvFechaFabricacion = findViewById(R.id.av_tv_ffabricacion);
-        tvFechaCompra = findViewById(R.id.av_tv_fcompra);
+        tvMarca = findViewById(R.id.rvm_tv_nombre);
+        tvModelo = findViewById(R.id.rvm_tv_tipo);
+        tvFechaFabricacion = findViewById(R.id.rvm_tv_fecha);
+        tvFechaCompra = findViewById(R.id.rvm_tv_odometro);
     }
+
+    public void lanzarMantenimientos (View view) {
+        Intent intent = new Intent(this, MantenimientosActivity.class);
+        startActivity(intent);
+    }
+/*
+    private class LeerVehiculo extends AsyncTask<Void, Void, List<Vehiculo>> implements RecyclerViewInterface {
+        @Override
+        protected List<Vehiculo> doInBackground(Void... voids) {
+            vehiculos = AppDatabase.getAppDb(getApplicationContext()).vehiculoRepository().findAll();
+            return vehiculos;
+        }
+
+        @Override
+        protected void onPostExecute(List<Vehiculo> vehiculos) {
+            RecyclerView recyclerView = findViewById(R.id.am_recyclerview);
+            RecyclerViewAdapter adapter = new RecyclerViewAdapter(getApplicationContext(), vehiculos, this);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        }
+
+        @Override
+        public void onItemClick(int position) {
+            Intent intent = new Intent(MainActivity.this, VehiculoActivity.class);
+            intent.putExtra("selectedVehicle", vehiculos.get(position).getId());
+            startActivity(intent);
+        }
+    }*/
 }

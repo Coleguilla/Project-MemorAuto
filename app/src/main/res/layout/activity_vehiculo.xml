@@ -25,6 +25,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
+        android:onClick="lanzarMantenimientos"
         app:cardBackgroundColor="@color/bluelight"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
@@ -37,7 +38,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/av_tv_mar"
+                android:id="@+id/rvm_tv_nom"
                 style="@style/TextAppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +50,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/av_tv_marca"
+                android:id="@+id/rvm_tv_nombre"
                 style="@style/TextAppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,10 +58,10 @@
                 android:text="Marca"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/av_tv_mar" />
+                app:layout_constraintTop_toBottomOf="@+id/rvm_tv_nom" />
 
             <TextView
-                android:id="@+id/av_tv_mode"
+                android:id="@+id/rvm_tv_tip"
                 style="@style/TextAppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,7 +73,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/av_tv_modelo"
+                android:id="@+id/rvm_tv_tipo"
                 style="@style/TextAppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,10 +81,10 @@
                 android:text="Modelo"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/av_tv_mode" />
+                app:layout_constraintTop_toBottomOf="@+id/rvm_tv_tip" />
 
             <TextView
-                android:id="@+id/av_tv_ffab"
+                android:id="@+id/rvm_tv_fech"
                 style="@style/TextAppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,10 +93,10 @@
                 android:text="Fecha de fabricación"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/av_tv_marca" />
+                app:layout_constraintTop_toBottomOf="@+id/rvm_tv_nombre" />
 
             <TextView
-                android:id="@+id/av_tv_ffabricacion"
+                android:id="@+id/rvm_tv_fecha"
                 style="@style/TextAppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,10 +106,10 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/av_tv_ffab" />
+                app:layout_constraintTop_toBottomOf="@+id/rvm_tv_fech" />
 
             <TextView
-                android:id="@+id/av_tv_fcomp"
+                android:id="@+id/rvm_tv_odom"
                 style="@style/TextAppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,10 +118,10 @@
                 android:text="Fecha de compra"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/av_tv_modelo" />
+                app:layout_constraintTop_toBottomOf="@+id/rvm_tv_tipo" />
 
             <TextView
-                android:id="@+id/av_tv_fcompra"
+                android:id="@+id/rvm_tv_odometro"
                 style="@style/TextAppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -130,7 +131,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/av_tv_fcomp" />
+                app:layout_constraintTop_toBottomOf="@+id/rvm_tv_odom" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -142,6 +143,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
+        android:onClick="lanzarMantenimientos"
         app:cardBackgroundColor="@color/bluelight"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
