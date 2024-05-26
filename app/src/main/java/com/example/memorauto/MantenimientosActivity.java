@@ -25,11 +25,14 @@ import java.util.List;
 public class MantenimientosActivity extends AppCompatActivity {
 
     private List<Mantenimiento> mantenimientos;
+    public int idVehiculo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mantenimientos);
+
+        idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
         configToolbar();
         LeerMantenimientos leerMantenimientos = new LeerMantenimientos();
         leerMantenimientos.execute();
@@ -52,6 +55,7 @@ public class MantenimientosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.mp_registrar) {
             Intent intent = new Intent(this, RegistroMantenimientoActivity.class);
+            intent.putExtra("selectedVehicle", idVehiculo);
             startActivity(intent);
             return true;
         }
@@ -61,7 +65,7 @@ public class MantenimientosActivity extends AppCompatActivity {
     private class LeerMantenimientos extends AsyncTask<Void, Void, List<Mantenimiento>> implements RecyclerViewInterfaceMantenimientos {
         @Override
         protected List<Mantenimiento> doInBackground(Void... voids) {
-            mantenimientos = AppDatabase.getAppDb(getApplicationContext()).mantenimientoRepository().findAll();
+            mantenimientos = AppDatabase.getAppDb(getApplicationContext()).mantenimientoRepository().findByVehiculoId(idVehiculo);
             return mantenimientos;
         }
 

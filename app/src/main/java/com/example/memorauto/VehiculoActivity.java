@@ -32,11 +32,10 @@ public class VehiculoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehiculo);
+
         idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
-        configToolbar();
-        configView();
-        rellenarFicha();
-        Log.d("TEST", String.valueOf(idVehiculo));
+        LeerVehiculo leerVehiculo = new LeerVehiculo();
+        leerVehiculo.execute();
     }
 
     private void rellenarFicha() {
@@ -69,29 +68,23 @@ public class VehiculoActivity extends AppCompatActivity {
 
     public void lanzarMantenimientos (View view) {
         Intent intent = new Intent(this, MantenimientosActivity.class);
+        intent.putExtra("selectedVehicle", vehiculo.getId());
         startActivity(intent);
     }
-/*
-    private class LeerVehiculo extends AsyncTask<Void, Void, List<Vehiculo>> implements RecyclerViewInterface {
+
+    private class LeerVehiculo extends AsyncTask<Void, Void, Vehiculo> {
         @Override
-        protected List<Vehiculo> doInBackground(Void... voids) {
-            vehiculos = AppDatabase.getAppDb(getApplicationContext()).vehiculoRepository().findAll();
-            return vehiculos;
+        protected Vehiculo doInBackground(Void... voids) {
+            vehiculo = AppDatabase.getAppDb(getApplicationContext()).vehiculoRepository().findById(idVehiculo);
+            return vehiculo;
         }
 
         @Override
-        protected void onPostExecute(List<Vehiculo> vehiculos) {
-            RecyclerView recyclerView = findViewById(R.id.am_recyclerview);
-            RecyclerViewAdapter adapter = new RecyclerViewAdapter(getApplicationContext(), vehiculos, this);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        protected void onPostExecute(Vehiculo vehiculo) {
+            configToolbar();
+            configView();
+            rellenarFicha();
         }
 
-        @Override
-        public void onItemClick(int position) {
-            Intent intent = new Intent(MainActivity.this, VehiculoActivity.class);
-            intent.putExtra("selectedVehicle", vehiculos.get(position).getId());
-            startActivity(intent);
-        }
-    }*/
+    }
 }

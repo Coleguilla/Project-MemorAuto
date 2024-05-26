@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(int position) {
             Intent intent = new Intent(MainActivity.this, VehiculoActivity.class);
-            intent.putExtra("selectedVehicle", vehiculos.get(position).getId()); //REVISTAR ESTO
+            intent.putExtra("selectedVehicle", vehiculos.get(position).getId());
             startActivity(intent);
         }
     }

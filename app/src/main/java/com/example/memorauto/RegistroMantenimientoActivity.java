@@ -21,11 +21,14 @@ public class RegistroMantenimientoActivity extends AppCompatActivity {
 
     private EditText etNombre, etTipo, etFecha, etOdometro;
     private GregorianCalendar gcFecha;
+    public int idVehiculo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_mantenimiento);
+
+        idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
         configToolbar();
         configView();
     }
@@ -60,7 +63,7 @@ public class RegistroMantenimientoActivity extends AppCompatActivity {
         if (etNombre.getText().toString().equals("") | etTipo.getText().toString().equals("") | etFecha.getText().toString().equals("")) {
             Toast.makeText(this, "NOMBRE, TIPO y FECHA son obligatorios para registrar un mantenimiento", Toast.LENGTH_LONG).show();
         } else {
-            Mantenimiento mantenimiento = new Mantenimiento(etNombre.getText().toString(), etTipo.getText().toString(), gcFecha, 1);
+            Mantenimiento mantenimiento = new Mantenimiento(etNombre.getText().toString(), etTipo.getText().toString(), gcFecha, idVehiculo);
             if (!etOdometro.getText().toString().equals("")) mantenimiento.setOdometro(Integer.parseInt(etOdometro.getText().toString()));
             HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), mantenimiento);
             hiloSecundario.start();
