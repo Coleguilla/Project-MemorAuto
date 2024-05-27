@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Mantenimiento;
+import com.example.memorauto.db.entity.Recordatorio;
 import com.example.memorauto.db.entity.Vehiculo;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class HiloSecundario extends Thread {
     public int idBoton;
     public Vehiculo vehiculo;
     public Mantenimiento mantenimiento;
+    public Recordatorio recordatorio;
 
     public HiloSecundario(Context context, int idBoton) {
         this.context = context;
@@ -36,6 +38,12 @@ public class HiloSecundario extends Thread {
         this.mantenimiento = mantenimiento;
     }
 
+    public HiloSecundario(Context context, int idBoton, Recordatorio recordatorio) {
+        this.context = context;
+        this.idBoton = idBoton;
+        this.recordatorio = recordatorio;
+    }
+
     public void run() {
         AppDatabase conexionBD = AppDatabase.getAppDb(context);
 
@@ -45,6 +53,10 @@ public class HiloSecundario extends Thread {
 
         if (idBoton == R.id.arm_bt_registrar) {
             conexionBD.mantenimientoRepository().insert(mantenimiento);
+        }
+
+        if (idBoton == R.id.arr_bt_registrar) {
+            conexionBD.recordatorioRepository().insert(recordatorio);
         }
 
         if (idBoton == R.id.button) {

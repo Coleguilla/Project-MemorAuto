@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 import static androidx.room.ForeignKey.*;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 @Entity(tableName = "TMantenimientos", foreignKeys = @ForeignKey(entity = Vehiculo.class, parentColumns = "id", childColumns = "vehiculoId", onDelete = CASCADE))
 public class Mantenimiento {
@@ -18,6 +19,8 @@ public class Mantenimiento {
     private GregorianCalendar fecha;
     private int odometro;
     private int vehiculoId;
+    @Ignore
+    private List<Recordatorio> recordatorios;
 
     //...
 
@@ -76,5 +79,13 @@ public class Mantenimiento {
 
     public void setVehiculoId(int vehiculoId) {
         this.vehiculoId = vehiculoId;
+    }
+
+    public List<Recordatorio> getRecordatorios() {
+        return recordatorios;
+    }
+
+    public void setRecordatorios(List<Recordatorio> recordatorios) {
+        this.recordatorios = recordatorios;
     }
 }
