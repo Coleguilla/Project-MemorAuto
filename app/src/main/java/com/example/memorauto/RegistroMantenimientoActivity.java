@@ -38,6 +38,14 @@ public class RegistroMantenimientoActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Registro de mantenimiento");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegistroMantenimientoActivity.this, MantenimientosActivity.class);
+                intent.putExtra("selectedVehicle", idVehiculo);
+                startActivity(intent);
+            }
+        });
     }
 
     private void configView() {
@@ -68,9 +76,10 @@ public class RegistroMantenimientoActivity extends AppCompatActivity {
             HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), mantenimiento);
             hiloSecundario.start();
 
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
             finish();
-            //Intent intent = new Intent(this, MainActivity.class);
-            //startActivity(intent);
+
         }
     }
 }

@@ -110,10 +110,11 @@
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/arm_bt_registrar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arm_tv_odometro"
-        app:layout_constraintBottom_toTopOf="@+id/arm_bt_registrar"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arm_tv_odometro" />
 
     <Button
         android:id="@+id/arm_bt_registrar"
