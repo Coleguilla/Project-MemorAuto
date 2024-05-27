@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Mantenimiento;
-import com.example.memorauto.db.entity.Vehiculo;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -94,12 +93,19 @@ public class RegistroMantenimientoActivity extends AppCompatActivity {
         if (etNombre.getText().toString().equals("") | etTipo.getText().toString().equals("") | etFecha.getText().toString().equals("")) {
             Toast.makeText(this, "NOMBRE, TIPO y FECHA son obligatorios para registrar un mantenimiento", Toast.LENGTH_LONG).show();
         } else {
-            Mantenimiento mantenimiento = new Mantenimiento(etNombre.getText().toString(), etTipo.getText().toString(), gcFecha, idVehiculo);
+            mantenimiento = new Mantenimiento(etNombre.getText().toString(), etTipo.getText().toString(), gcFecha, idVehiculo);
             if (!etOdometro.getText().toString().equals("")) mantenimiento.setOdometro(Integer.parseInt(etOdometro.getText().toString()));
 
-            EjecutarRegistro ejecutarRegistro = new EjecutarRegistro();
-            ejecutarRegistro.execute(mantenimiento);
+           // EjecutarRegistro ejecutarRegistro = new EjecutarRegistro();
+           // ejecutarRegistro.execute(mantenimiento);
 
+            Intent intent = new Intent(RegistroMantenimientoActivity.this, RegistroRecordatorioActivity.class);
+            //intent.putExtra("selectedMantenimiento", mantenimiento.getId());
+            intent.putExtra("selectedVehicle", idVehiculo);
+            intent.putExtra("selectedObject", mantenimiento);
+            startActivity(intent);
+            finish();
         }
+
     }
 }

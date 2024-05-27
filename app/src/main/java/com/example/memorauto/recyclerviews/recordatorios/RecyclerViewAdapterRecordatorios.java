@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,7 @@ public class RecyclerViewAdapterRecordatorios extends RecyclerView.Adapter<Recyc
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String cadenaFecha = recordatorios.get(position).getFechaAviso().get(Calendar.DAY_OF_MONTH)+"/"+(recordatorios.get(position).getFechaAviso().get(Calendar.MONTH) + 1)+"/"+recordatorios.get(position).getFechaAviso().get(Calendar.YEAR);
         holder.tvFAviso.setText(cadenaFecha);
-        //holder.ivAuto.setImageResource(R.drawable.icon_car);
+        holder.ivAlerta.setImageResource(R.drawable.icon_alert);
     }
 
     @Override
@@ -47,12 +48,12 @@ public class RecyclerViewAdapterRecordatorios extends RecyclerView.Adapter<Recyc
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvFAviso;
-        //ImageView ivAuto;
+        ImageView ivAlerta;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvFAviso = itemView.findViewById(R.id.rvr_tv_fAviso);
-            //ivAuto = itemView.findViewById(R.id.rvv_imageview);
+            ivAlerta = itemView.findViewById(R.id.rvr_imageview);
         }
     }
 }

@@ -5,12 +5,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.db.entity.Recordatorio;
 
@@ -23,6 +25,7 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
     private GregorianCalendar gcFechaAviso;
     public int idMantenimiento;
     public int idVehiculo;
+    public Mantenimiento mantenimiento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
 
         idMantenimiento = getIntent().getIntExtra("selectedMantenimiento", 0);
         idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
+        mantenimiento = (Mantenimiento) getIntent().getSerializableExtra("selectedObject");
         configToolbar();
         configView();
     }
@@ -66,18 +70,39 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private class EjecutarRegistro extends AsyncTask<Mantenimiento, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Mantenimiento... mantenimientos) {
+            if (mantenimiento != null) {
+                AppDatabase.getAppDb(getApplicationContext()).mantenimientoRepository().insert(mantenimientos[0]);
+                mantenimiento = AppDatabase.getAppDb(getApplicationContext()).mantenimientoRepository().findLastMantenimiento();
+
+                Recordatorio recordatorio = new Recordatorio(gcFechaAviso, mantenimiento.getId());
+                AppDatabase.getAppDb(getApplicationContext()).recordatorioRepository().insert(recordatorio);
+            } else {
+                Recordatorio recordatorio = new Recordatorio(gcFechaAviso, idMantenimiento);
+                AppDatabase.getAppDb(getApplicationContext()).recordatorioRepository().insert(recordatorio);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+
+            Intent intent = new Intent(RegistroRecordatorioActivity.this, MantenimientosActivity.class);
+            intent.putExtra("selectedVehicle", idVehiculo);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     public void registrarRecordatorio(View view) {
         if (etFAviso.getText().toString().equals("")) {
             Toast.makeText(this, "FECHA es obligatoria para registrar un recordatorio", Toast.LENGTH_LONG).show();
         } else {
-            Recordatorio recordatorio = new Recordatorio(gcFechaAviso, idMantenimiento);
-            HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), recordatorio);
-            hiloSecundario.start();
-
-            Intent intent = new Intent(this, MantenimientosActivity.class);
-            intent.putExtra("selectedVehicle", idVehiculo);
-            startActivity(intent);
-            finish();
+            EjecutarRegistro ejecutarRegistro = new EjecutarRegistro();
+            ejecutarRegistro.execute(mantenimiento);
 
         }
     }

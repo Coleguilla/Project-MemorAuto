@@ -55,7 +55,11 @@ public class HiloSecundario extends Thread {
             conexionBD.mantenimientoRepository().insert(mantenimiento);
         }
 
-        if (idBoton == R.id.arr_bt_registrar) {
+        if (idBoton == 1) {
+            conexionBD.mantenimientoRepository().insert(mantenimiento);
+        }
+
+        if (idBoton == 2) {
             conexionBD.recordatorioRepository().insert(recordatorio);
         }
 

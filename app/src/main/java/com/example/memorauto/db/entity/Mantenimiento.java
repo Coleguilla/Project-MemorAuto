@@ -7,11 +7,12 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.*;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 @Entity(tableName = "TMantenimientos", foreignKeys = @ForeignKey(entity = Vehiculo.class, parentColumns = "id", childColumns = "vehiculoId", onDelete = CASCADE))
-public class Mantenimiento {
+public class Mantenimiento implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String nombre;
