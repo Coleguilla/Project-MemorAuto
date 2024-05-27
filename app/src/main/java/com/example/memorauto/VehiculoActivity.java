@@ -85,6 +85,6 @@ public class VehiculoActivity extends AppCompatActivity {
             configView();
             rellenarFicha();
         }
-
     }
+
 }

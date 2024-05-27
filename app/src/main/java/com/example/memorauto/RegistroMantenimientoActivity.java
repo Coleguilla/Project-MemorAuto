@@ -5,12 +5,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.db.entity.Vehiculo;
 
@@ -22,6 +24,7 @@ public class RegistroMantenimientoActivity extends AppCompatActivity {
     private EditText etNombre, etTipo, etFecha, etOdometro;
     private GregorianCalendar gcFecha;
     public int idVehiculo;
+    Mantenimiento mantenimiento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,18 +70,35 @@ public class RegistroMantenimientoActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private class EjecutarRegistro extends AsyncTask<Mantenimiento, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Mantenimiento... mantenimientos) {
+            AppDatabase.getAppDb(getApplicationContext()).mantenimientoRepository().insert(mantenimientos[0]);
+            mantenimiento = AppDatabase.getAppDb(getApplicationContext()).mantenimientoRepository().findLastMantenimiento();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+
+            Intent intent = new Intent(RegistroMantenimientoActivity.this, RegistroRecordatorioActivity.class);
+            intent.putExtra("selectedMantenimiento", mantenimiento.getId());
+            intent.putExtra("selectedVehicle", idVehiculo);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     public void registrarMantenimiento(View view) {
         if (etNombre.getText().toString().equals("") | etTipo.getText().toString().equals("") | etFecha.getText().toString().equals("")) {
             Toast.makeText(this, "NOMBRE, TIPO y FECHA son obligatorios para registrar un mantenimiento", Toast.LENGTH_LONG).show();
         } else {
             Mantenimiento mantenimiento = new Mantenimiento(etNombre.getText().toString(), etTipo.getText().toString(), gcFecha, idVehiculo);
             if (!etOdometro.getText().toString().equals("")) mantenimiento.setOdometro(Integer.parseInt(etOdometro.getText().toString()));
-            HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), mantenimiento);
-            hiloSecundario.start();
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            EjecutarRegistro ejecutarRegistro = new EjecutarRegistro();
+            ejecutarRegistro.execute(mantenimiento);
 
         }
     }

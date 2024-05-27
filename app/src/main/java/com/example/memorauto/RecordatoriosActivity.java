@@ -26,11 +26,15 @@ public class RecordatoriosActivity extends AppCompatActivity {
 
     private List<Recordatorio> recordatorios;
     public int idMantenimiento;
+    public int idVehiculo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recordatorios);
+
+        idMantenimiento = getIntent().getIntExtra("selectedMantenimiento", 0);
+        idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
 
         configToolbar();
         LeerRecordatorios leerRecordatorios = new LeerRecordatorios();
@@ -46,7 +50,7 @@ public class RecordatoriosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RecordatoriosActivity.this, MantenimientosActivity.class);
-                intent.putExtra("selectedVehicle", idMantenimiento);
+                intent.putExtra("selectedVehicle", idVehiculo);
                 startActivity(intent);
             }
         });
@@ -62,7 +66,8 @@ public class RecordatoriosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.mp_registrar) {
             Intent intent = new Intent(this, RegistroRecordatorioActivity.class);
-            intent.putExtra("selectedVehicle", idMantenimiento);
+            intent.putExtra("selectedMantenimiento", idMantenimiento);
+            intent.putExtra("selectedVehicle", idVehiculo);
             startActivity(intent);
             return true;
         }

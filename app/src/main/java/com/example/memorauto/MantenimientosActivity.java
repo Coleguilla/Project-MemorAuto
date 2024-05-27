@@ -89,8 +89,9 @@ public class MantenimientosActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(int position) {
-            Intent intent = new Intent(MantenimientosActivity.this, MainActivity.class);
-            //intent.putExtra("selectedVehicle", vehiculos.get(position));
+            Intent intent = new Intent(MantenimientosActivity.this, RecordatoriosActivity.class);
+            intent.putExtra("selectedMantenimiento", mantenimientos.get(position).getId());
+            intent.putExtra("selectedVehicle", idVehiculo);
             startActivity(intent);
         }
     }

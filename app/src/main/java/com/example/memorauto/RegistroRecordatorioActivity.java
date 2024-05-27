@@ -22,13 +22,15 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
     private EditText etFAviso;
     private GregorianCalendar gcFechaAviso;
     public int idMantenimiento;
+    public int idVehiculo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_recordatorio);
 
-        idMantenimiento = getIntent().getIntExtra("selectedVehicle", 0);
+        idMantenimiento = getIntent().getIntExtra("selectedMantenimiento", 0);
+        idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
         configToolbar();
         configView();
     }
@@ -42,7 +44,7 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RegistroRecordatorioActivity.this, MantenimientosActivity.class);
-                intent.putExtra("selectedVehicle", idMantenimiento);
+                intent.putExtra("selectedVehicle", idVehiculo);
                 startActivity(intent);
             }
         });
@@ -73,6 +75,7 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
             hiloSecundario.start();
 
             Intent intent = new Intent(this, MantenimientosActivity.class);
+            intent.putExtra("selectedVehicle", idVehiculo);
             startActivity(intent);
             finish();
 

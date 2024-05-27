@@ -87,9 +87,9 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
             HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), vehiculo);
             hiloSecundario.start();
 
-            finish();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }

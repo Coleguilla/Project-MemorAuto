@@ -18,4 +18,7 @@ public interface MantenimientoRepository {
 
     @Query("SELECT * FROM TMantenimientos")
     List<Mantenimiento> findAll();
+
+    @Query("SELECT * FROM TMantenimientos WHERE id = (SELECT MAX(id) FROM TMantenimientos)")
+    Mantenimiento findLastMantenimiento();
 }
