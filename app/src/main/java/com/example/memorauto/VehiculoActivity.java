@@ -13,9 +13,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.memorauto.db.database.AppDatabase;
+import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.db.entity.Vehiculo;
+import com.example.memorauto.recyclerviews.fichamantenimientos.RecyclerViewAdapterFichaMantenimientos;
 import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewAdapter;
 import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewInterface;
+import com.example.memorauto.recyclerviews.recordatorios.RecyclerViewAdapterRecordatorios;
 
 import java.util.Calendar;
 import java.util.List;
@@ -27,6 +30,7 @@ public class VehiculoActivity extends AppCompatActivity {
     private String cadenaFFabricacion;
     private String cadenaFCompra;
     public int idVehiculo;
+    public List<Mantenimiento> mantenimientos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,8 @@ public class VehiculoActivity extends AppCompatActivity {
         idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
         LeerVehiculo leerVehiculo = new LeerVehiculo();
         leerVehiculo.execute();
-    }
+
+        }
 
     private void rellenarFicha() {
         if (vehiculo.getFecha_fabricacion() != null){
@@ -76,6 +81,7 @@ public class VehiculoActivity extends AppCompatActivity {
         @Override
         protected Vehiculo doInBackground(Void... voids) {
             vehiculo = AppDatabase.getAppDb(getApplicationContext()).vehiculoRepository().findById(idVehiculo);
+            mantenimientos = AppDatabase.getAppDb(getApplicationContext()).mantenimientoRepository().findByVehiculoId(idVehiculo);
             return vehiculo;
         }
 
@@ -84,6 +90,11 @@ public class VehiculoActivity extends AppCompatActivity {
             configToolbar();
             configView();
             rellenarFicha();
+            RecyclerView recyclerView = findViewById(R.id.av_recyclerview);
+            RecyclerViewAdapterFichaMantenimientos adapter = new RecyclerViewAdapterFichaMantenimientos(getApplicationContext(), mantenimientos);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
         }
     }
 
