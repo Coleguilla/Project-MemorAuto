@@ -53,10 +53,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/arm_et_nombre"
-        app:layout_constraintBottom_toTopOf="@+id/arm_et_tipo" />
+        app:layout_constraintBottom_toTopOf="@+id/arm_sp_tipo" />
 
-    <EditText
-        android:id="@+id/arm_et_tipo"
+    <Spinner
+        android:id="@+id/arm_sp_tipo"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -75,7 +75,7 @@
         android:text="Fecha"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arm_et_tipo"
+        app:layout_constraintTop_toBottomOf="@+id/arm_sp_tipo"
         app:layout_constraintBottom_toTopOf="@+id/arm_et_fecha"/>
 
     <EditText

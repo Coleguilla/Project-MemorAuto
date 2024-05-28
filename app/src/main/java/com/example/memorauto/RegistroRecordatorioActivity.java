@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.memorauto.db.database.AppDatabase;
@@ -22,6 +23,7 @@ import java.util.GregorianCalendar;
 public class RegistroRecordatorioActivity extends AppCompatActivity {
 
     private EditText etFAviso;
+    private TextView tvConsejo;
     private GregorianCalendar gcFechaAviso;
     public int idMantenimiento;
     public int idVehiculo;
@@ -56,10 +58,44 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
 
     private void configView() {
         etFAviso = findViewById(R.id.arr_et_fecha);
+        tvConsejo = findViewById(R.id.arr_tv_consejo);
+
+        if (mantenimiento != null && mantenimiento.getTipo().equals("ITV")) {
+            fechaRecomendada(mantenimiento.getFecha(), 12);
+            String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
+            tvConsejo.setText(cadenaFRecomendada);
+        } else if (mantenimiento != null && mantenimiento.getTipo().equals("Cambio de aceite")) {
+            fechaRecomendada(mantenimiento.getFecha(), 6);
+            String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
+            tvConsejo.setText(cadenaFRecomendada);
+        } else if (mantenimiento != null && mantenimiento.getTipo().equals("Filtro de aire")) {
+            fechaRecomendada(mantenimiento.getFecha(), 8);
+            String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
+            tvConsejo.setText(cadenaFRecomendada);
+        } else if (mantenimiento != null && mantenimiento.getTipo().equals("Liquido de frenos")) {
+            fechaRecomendada(mantenimiento.getFecha(), 18);
+            String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
+            tvConsejo.setText(cadenaFRecomendada);
+        } else if (mantenimiento != null && mantenimiento.getTipo().equals("Cambio de bateria")) {
+            fechaRecomendada(mantenimiento.getFecha(), 24);
+            String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
+            tvConsejo.setText(cadenaFRecomendada);
+        } else {
+            gcFechaAviso = new GregorianCalendar();
+            tvConsejo.setText("");
+        }
+    }
+
+    private void fechaRecomendada(GregorianCalendar gc, int cantidad) {
+        gcFechaAviso = gc;
+        gcFechaAviso.add(Calendar.MONTH, cantidad);
+    }
+
+    private String convertirFechaString(GregorianCalendar gc) {
+        return gc.get(Calendar.DAY_OF_MONTH) + "/" + (gc.get(Calendar.MONTH) + 1) + "/" + gc.get(Calendar.YEAR);
     }
 
     public void selectFecha(View view) {
-        gcFechaAviso = new GregorianCalendar();
         DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {

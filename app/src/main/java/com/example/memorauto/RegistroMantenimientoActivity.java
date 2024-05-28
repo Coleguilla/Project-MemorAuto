@@ -7,8 +7,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.memorauto.db.entity.Mantenimiento;
@@ -18,7 +20,8 @@ import java.util.GregorianCalendar;
 
 public class RegistroMantenimientoActivity extends AppCompatActivity {
 
-    private EditText etNombre, etTipo, etFecha, etOdometro;
+    private EditText etNombre, etFecha, etOdometro;
+    private Spinner spTipo;
     private GregorianCalendar gcFecha;
     public int idVehiculo;
     Mantenimiento mantenimiento;
@@ -50,9 +53,14 @@ public class RegistroMantenimientoActivity extends AppCompatActivity {
 
     private void configView() {
         etNombre = findViewById(R.id.arm_et_nombre);
-        etTipo = findViewById(R.id.arm_et_tipo);
+        spTipo = findViewById(R.id.arm_sp_tipo);
         etFecha = findViewById(R.id.arm_et_fecha);
         etOdometro = findViewById(R.id.arm_et_odometro);
+
+        String[] opciones = {"ITV", "Cambio de aceite", "Filtro de aire", "Liquido de frenos", "Cambio de bateria", "Otros"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spTipo.setAdapter(adapter);
     }
 
     public void selectFecha(View view) {
@@ -69,11 +77,12 @@ public class RegistroMantenimientoActivity extends AppCompatActivity {
     }
 
     public void registrarMantenimiento(View view) {
-        if (etNombre.getText().toString().equals("") | etTipo.getText().toString().equals("") | etFecha.getText().toString().equals("")) {
+        if (etNombre.getText().toString().equals("") | spTipo.getSelectedItem().toString().equals("") | etFecha.getText().toString().equals("")) {
             Toast.makeText(this, "NOMBRE, TIPO y FECHA son obligatorios para registrar un mantenimiento", Toast.LENGTH_LONG).show();
         } else {
-            mantenimiento = new Mantenimiento(etNombre.getText().toString(), etTipo.getText().toString(), gcFecha, idVehiculo);
-            if (!etOdometro.getText().toString().equals("")) mantenimiento.setOdometro(Integer.parseInt(etOdometro.getText().toString()));
+            mantenimiento = new Mantenimiento(etNombre.getText().toString(), spTipo.getSelectedItem().toString(), gcFecha, idVehiculo);
+            if (!etOdometro.getText().toString().equals(""))
+                mantenimiento.setOdometro(Integer.parseInt(etOdometro.getText().toString()));
 
             Intent intent = new Intent(RegistroMantenimientoActivity.this, RegistroRecordatorioActivity.class);
             intent.putExtra("SELECTED_VEHICLE", idVehiculo);
