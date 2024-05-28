@@ -13,7 +13,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="5dp"
-        app:cardBackgroundColor="@color/bluemedium"
+        app:cardBackgroundColor="@color/bluelight"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,13 +48,13 @@
 
             <TextView
                 android:id="@+id/rvr_tv_fAviso"
+                style="@style/TextAppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="160dp"
                 android:text="Fecha de aviso"
                 android:textSize="24dp"
                 android:textStyle="bold"
-                style="@style/TextAppTheme"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvr_tv_fAvi" />
 
