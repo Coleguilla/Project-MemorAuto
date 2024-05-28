@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -17,6 +18,8 @@ import com.example.memorauto.db.entity.Vehiculo;
 import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewAdapter;
 import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewInterface;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -63,6 +66,40 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
+    private boolean compararFechas(GregorianCalendar fechaRecordatorio) {
+        GregorianCalendar fechaActual = new GregorianCalendar();
+
+        fechaActual.set(Calendar.HOUR_OF_DAY, 0);
+        fechaActual.set(Calendar.MINUTE, 0);
+        fechaActual.set(Calendar.SECOND, 0);
+        fechaActual.set(Calendar.MILLISECOND, 0);
+
+        fechaRecordatorio.set(Calendar.HOUR_OF_DAY, 0);
+        fechaRecordatorio.set(Calendar.MINUTE, 0);
+        fechaRecordatorio.set(Calendar.SECOND, 0);
+        fechaRecordatorio.set(Calendar.MILLISECOND, 0);
+
+        if (fechaActual.equals(fechaRecordatorio)) {
+            Log.d("ALARMA", "La notificacion es real");
+            return true;
+        } else {
+            Log.d("OFF", "No pasa nada");
+            return false;
+        }
+    }
+
+    private void comprobarRecordatorios() {
+        for (int i=0; i<vehiculos.size(); i++){
+            for (int e=0; e<vehiculos.get(i).getMantenimientos().size(); e++){
+                for (int d=0; d<vehiculos.get(i).getMantenimientos().get(e).getRecordatorios().size(); d++){
+                    if (compararFechas(vehiculos.get(i).getMantenimientos().get(e).getRecordatorios().get(d).getFechaAviso())) {
+                        Log.d("QUIEN", "El vehiculo: " + vehiculos.get(i).getNombre()+ ", el mantenimiento: "+vehiculos.get(i).getMantenimientos().get(e).getNombre()+", de tipo: "+vehiculos.get(i).getMantenimientos().get(e).getTipo());
+                    }
+                }
+            }
+        }
+    }
+
     private class LeerVehiculos extends AsyncTask<Void, Void, List<Vehiculo>> implements RecyclerViewInterface {
         @Override
         protected List<Vehiculo> doInBackground(Void... voids) {
@@ -74,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<Vehiculo> vehiculos) {
             configToolbar();
             configRecyclerView(this);
+            comprobarRecordatorios();
         }
 
         @Override
