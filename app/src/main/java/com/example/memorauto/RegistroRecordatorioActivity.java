@@ -32,9 +32,9 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_recordatorio);
 
-        idMantenimiento = getIntent().getIntExtra("selectedMantenimiento", 0);
-        idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
-        mantenimiento = (Mantenimiento) getIntent().getSerializableExtra("selectedObject");
+        idMantenimiento = getIntent().getIntExtra("SELECTED_MAINTENANCE", 0);
+        idVehiculo = getIntent().getIntExtra("SELECTED_VEHICLE", 0);
+        mantenimiento = (Mantenimiento) getIntent().getSerializableExtra("SELECTED_OBJECT");
         configToolbar();
         configView();
     }
@@ -48,7 +48,7 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RegistroRecordatorioActivity.this, MantenimientosActivity.class);
-                intent.putExtra("selectedVehicle", idVehiculo);
+                intent.putExtra("SELECTED_VEHICLE", idVehiculo);
                 startActivity(intent);
             }
         });
@@ -63,11 +63,21 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
         DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                etFAviso.setText(String.valueOf(day) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
+                String cadenaFAviso = day + "/" + (month + 1) + "/" + year;
+                etFAviso.setText(cadenaFAviso);
                 gcFechaAviso = new GregorianCalendar(year, month, day);
             }
         }, gcFechaAviso.get(Calendar.YEAR), gcFechaAviso.get(Calendar.MONTH), gcFechaAviso.get(Calendar.DAY_OF_MONTH));
         dialog.show();
+    }
+
+    public void registrarRecordatorio(View view) {
+        if (etFAviso.getText().toString().equals("")) {
+            Toast.makeText(this, "FECHA es obligatoria para registrar un recordatorio", Toast.LENGTH_LONG).show();
+        } else {
+            EjecutarRegistro ejecutarRegistro = new EjecutarRegistro();
+            ejecutarRegistro.execute(mantenimiento);
+        }
     }
 
     private class EjecutarRegistro extends AsyncTask<Mantenimiento, Void, Void> {
@@ -89,21 +99,11 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void unused) {
-
             Intent intent = new Intent(RegistroRecordatorioActivity.this, MantenimientosActivity.class);
-            intent.putExtra("selectedVehicle", idVehiculo);
+            intent.putExtra("SELECTED_VEHICLE", idVehiculo);
             startActivity(intent);
             finish();
         }
     }
 
-    public void registrarRecordatorio(View view) {
-        if (etFAviso.getText().toString().equals("")) {
-            Toast.makeText(this, "FECHA es obligatoria para registrar un recordatorio", Toast.LENGTH_LONG).show();
-        } else {
-            EjecutarRegistro ejecutarRegistro = new EjecutarRegistro();
-            ejecutarRegistro.execute(mantenimiento);
-
-        }
-    }
 }

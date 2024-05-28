@@ -5,20 +5,18 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.memorauto.db.database.AppDatabase;
-import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.db.entity.Vehiculo;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 public class RegistroVehiculoActivity extends AppCompatActivity {
 
@@ -29,6 +27,7 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_vehiculo);
+
         configToolbar();
         configView();
     }
@@ -53,7 +52,8 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
         DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                etFechaFabricacion.setText(String.valueOf(day) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
+                String cadenaFFabricacion = day + "/" + (month + 1) + "/" + year;
+                etFechaFabricacion.setText(cadenaFFabricacion);
                 gcFFabricacion = new GregorianCalendar(year, month, day);
             }
         }, gcFFabricacion.get(Calendar.YEAR), gcFFabricacion.get(Calendar.MONTH), gcFFabricacion.get(Calendar.DAY_OF_MONTH));
@@ -65,16 +65,12 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
         DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                etFechaCompra.setText(String.valueOf(day) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
+                String cadenaFCompra = day + "/" + (month + 1) + "/" + year;
+                etFechaCompra.setText(cadenaFCompra);
                 gcFCompra = new GregorianCalendar(year, month, day);
             }
         }, gcFCompra.get(Calendar.YEAR), gcFCompra.get(Calendar.MONTH), gcFCompra.get(Calendar.DAY_OF_MONTH));
         dialog.show();
-    }
-
-    public void botonPrueba(View view){
-        HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId());
-        hiloSecundario.start();
     }
 
     public void registrarVehiculo(View view) {
@@ -84,12 +80,26 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
             Vehiculo vehiculo = new Vehiculo(etNombre.getText().toString(), etMarca.getText().toString(), etModelo.getText().toString());
             if (gcFFabricacion != null) vehiculo.setFecha_fabricacion(gcFFabricacion);
             if (gcFCompra != null) vehiculo.setFecha_compra(gcFCompra);
-            HiloSecundario hiloSecundario = new HiloSecundario(getApplicationContext(), view.getId(), vehiculo);
-            hiloSecundario.start();
 
-            Intent intent = new Intent(this, MainActivity.class);
+            EjecutarRegistro ejecutarRegistro = new EjecutarRegistro();
+            ejecutarRegistro.execute(vehiculo);
+        }
+    }
+
+    private class EjecutarRegistro extends AsyncTask<Vehiculo, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Vehiculo... vehiculos) {
+            AppDatabase.getAppDb(getApplicationContext()).vehiculoRepository().insert(vehiculos[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            Intent intent = new Intent(RegistroVehiculoActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
     }
+
 }

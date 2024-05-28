@@ -9,16 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Mantenimiento;
-import com.example.memorauto.db.entity.Vehiculo;
-import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewAdapter;
-import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewInterface;
 import com.example.memorauto.recyclerviews.mantenimientos.RecyclerViewAdapterMantenimientos;
 import com.example.memorauto.recyclerviews.mantenimientos.RecyclerViewInterfaceMantenimientos;
 
@@ -34,8 +30,7 @@ public class MantenimientosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mantenimientos);
 
-        idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
-        configToolbar();
+        idVehiculo = getIntent().getIntExtra("SELECTED_VEHICLE", 0);
         LeerMantenimientos leerMantenimientos = new LeerMantenimientos();
         leerMantenimientos.execute();
     }
@@ -49,7 +44,7 @@ public class MantenimientosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MantenimientosActivity.this, VehiculoActivity.class);
-                intent.putExtra("selectedVehicle", idVehiculo);
+                intent.putExtra("SELECTED_VEHICLE", idVehiculo);
                 startActivity(intent);
             }
         });
@@ -65,11 +60,18 @@ public class MantenimientosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.mp_registrar) {
             Intent intent = new Intent(this, RegistroMantenimientoActivity.class);
-            intent.putExtra("selectedVehicle", idVehiculo);
+            intent.putExtra("SELECTED_VEHICLE", idVehiculo);
             startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void configRecyclerView(RecyclerViewInterfaceMantenimientos rvim) {
+        RecyclerView recyclerView = findViewById(R.id.amant_recyclerview);
+        RecyclerViewAdapterMantenimientos adapter = new RecyclerViewAdapterMantenimientos(getApplicationContext(), mantenimientos, rvim);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
     private class LeerMantenimientos extends AsyncTask<Void, Void, List<Mantenimiento>> implements RecyclerViewInterfaceMantenimientos {
@@ -81,18 +83,17 @@ public class MantenimientosActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<Mantenimiento> mantenimientos) {
-            RecyclerView recyclerView = findViewById(R.id.amant_recyclerview);
-            RecyclerViewAdapterMantenimientos adapter = new RecyclerViewAdapterMantenimientos(getApplicationContext(), mantenimientos, this);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            configToolbar();
+            configRecyclerView(this);
         }
 
         @Override
         public void onItemClick(int position) {
             Intent intent = new Intent(MantenimientosActivity.this, RecordatoriosActivity.class);
-            intent.putExtra("selectedMantenimiento", mantenimientos.get(position).getId());
-            intent.putExtra("selectedVehicle", idVehiculo);
+            intent.putExtra("SELECTED_MAINTENANCE", mantenimientos.get(position).getId());
+            intent.putExtra("SELECTED_VEHICLE", idVehiculo);
             startActivity(intent);
         }
     }
+
 }

@@ -20,10 +20,12 @@ import java.util.List;
 public class RecyclerViewAdapterFichaMantenimientos extends RecyclerView.Adapter<RecyclerViewAdapterFichaMantenimientos.MyViewHolder> {
     Context context;
     List<Mantenimiento> mantenimientos;
+    private final RecyclerViewInterfaceFichaMantenimientos recyclerViewInterfaceFichaMantenimientos;
 
-    public RecyclerViewAdapterFichaMantenimientos(Context context, List<Mantenimiento> mantenimientos) {
+    public RecyclerViewAdapterFichaMantenimientos(Context context, List<Mantenimiento> mantenimientos, RecyclerViewInterfaceFichaMantenimientos recyclerViewInterfaceFichaMantenimientos) {
         this.context = context;
         this.mantenimientos = mantenimientos;
+        this.recyclerViewInterfaceFichaMantenimientos = recyclerViewInterfaceFichaMantenimientos;
     }
 
     @NonNull
@@ -31,7 +33,7 @@ public class RecyclerViewAdapterFichaMantenimientos extends RecyclerView.Adapter
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_view_ficha_mantenimiento, parent, false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, recyclerViewInterfaceFichaMantenimientos);
     }
 
     @Override
@@ -50,11 +52,24 @@ public class RecyclerViewAdapterFichaMantenimientos extends RecyclerView.Adapter
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombre, tvTipo, tvFecha;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewInterfaceFichaMantenimientos recyclerViewInterfaceFichaMantenimientos) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.rvfm_tv_nombre);
             tvTipo = itemView.findViewById(R.id.rvfm_tv_tipo);
             tvFecha = itemView.findViewById(R.id.rvfm_tv_fecha);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (recyclerViewInterfaceFichaMantenimientos != null){
+                        int pos = getAdapterPosition();
+                        if(pos != RecyclerView.NO_POSITION) {
+                            recyclerViewInterfaceFichaMantenimientos.onItemClick(pos);
+                        }
+                    }
+
+                }
+            });
         }
     }
 }

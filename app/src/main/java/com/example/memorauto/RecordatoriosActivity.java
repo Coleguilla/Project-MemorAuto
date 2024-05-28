@@ -16,6 +16,8 @@ import android.view.View;
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.db.entity.Recordatorio;
+import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewAdapter;
+import com.example.memorauto.recyclerviews.mainactivity.RecyclerViewInterface;
 import com.example.memorauto.recyclerviews.mantenimientos.RecyclerViewAdapterMantenimientos;
 import com.example.memorauto.recyclerviews.mantenimientos.RecyclerViewInterfaceMantenimientos;
 import com.example.memorauto.recyclerviews.recordatorios.RecyclerViewAdapterRecordatorios;
@@ -33,10 +35,8 @@ public class RecordatoriosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recordatorios);
 
-        idMantenimiento = getIntent().getIntExtra("selectedMantenimiento", 0);
-        idVehiculo = getIntent().getIntExtra("selectedVehicle", 0);
-
-        configToolbar();
+        idMantenimiento = getIntent().getIntExtra("SELECTED_MAINTENANCE", 0);
+        idVehiculo = getIntent().getIntExtra("SELECTED_VEHICLE", 0);
         LeerRecordatorios leerRecordatorios = new LeerRecordatorios();
         leerRecordatorios.execute();
     }
@@ -50,7 +50,7 @@ public class RecordatoriosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RecordatoriosActivity.this, MantenimientosActivity.class);
-                intent.putExtra("selectedVehicle", idVehiculo);
+                intent.putExtra("SELECTED_VEHICLE", idVehiculo);
                 startActivity(intent);
             }
         });
@@ -66,12 +66,19 @@ public class RecordatoriosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.mp_registrar) {
             Intent intent = new Intent(this, RegistroRecordatorioActivity.class);
-            intent.putExtra("selectedMantenimiento", idMantenimiento);
-            intent.putExtra("selectedVehicle", idVehiculo);
+            intent.putExtra("SELECTED_MAINTENANCE", idMantenimiento);
+            intent.putExtra("SELECTED_VEHICLE", idVehiculo);
             startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void configRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.ar_recyclerview);
+        RecyclerViewAdapterRecordatorios adapter = new RecyclerViewAdapterRecordatorios(getApplicationContext(), recordatorios);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
     private class LeerRecordatorios extends AsyncTask<Void, Void, List<Recordatorio>> {
@@ -83,11 +90,9 @@ public class RecordatoriosActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<Recordatorio> recordatorios) {
-            RecyclerView recyclerView = findViewById(R.id.ar_recyclerview);
-            RecyclerViewAdapterRecordatorios adapter = new RecyclerViewAdapterRecordatorios(getApplicationContext(), recordatorios);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            configToolbar();
+            configRecyclerView();
         }
-
     }
+
 }
