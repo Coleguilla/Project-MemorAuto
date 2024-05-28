@@ -42,10 +42,10 @@ public class VehiculoActivity extends AppCompatActivity {
     }
 
     private void configView() {
-        tvMarca = findViewById(R.id.rvm_tv_nombre);
-        tvModelo = findViewById(R.id.rvm_tv_tipo);
-        tvFechaFabricacion = findViewById(R.id.rvm_tv_fecha);
-        tvFechaCompra = findViewById(R.id.rvm_tv_odometro);
+        tvMarca = findViewById(R.id.av_tv_marca);
+        tvModelo = findViewById(R.id.av_tv_modelo);
+        tvFechaFabricacion = findViewById(R.id.av_tv_fechafabricacion);
+        tvFechaCompra = findViewById(R.id.av_tv_fechacompra);
     }
 
     private void rellenarFicha() {
