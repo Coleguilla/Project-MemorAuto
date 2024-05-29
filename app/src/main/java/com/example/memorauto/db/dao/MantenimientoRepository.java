@@ -15,10 +15,11 @@ public interface MantenimientoRepository {
 
     @Query("SELECT * FROM TMantenimientos where vehiculoId LIKE :vehiculoId")
     List<Mantenimiento> findByVehiculoId(int vehiculoId);
-
     @Query("SELECT * FROM TMantenimientos")
     List<Mantenimiento> findAll();
-
     @Query("SELECT * FROM TMantenimientos WHERE id = (SELECT MAX(id) FROM TMantenimientos)")
     Mantenimiento findLastMantenimiento();
+
+    @Query("DELETE FROM TMantenimientos where id LIKE :id")
+    void deleteById(int id);
 }

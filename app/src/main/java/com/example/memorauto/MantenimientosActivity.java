@@ -1,17 +1,21 @@
 package com.example.memorauto;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Mantenimiento;
@@ -69,10 +73,44 @@ public class MantenimientosActivity extends AppCompatActivity {
 
     private void configRecyclerView(RecyclerViewInterfaceMantenimientos rvim) {
         RecyclerView recyclerView = findViewById(R.id.amant_recyclerview);
+        registerForContextMenu(recyclerView);
         RecyclerViewAdapterMantenimientos adapter = new RecyclerViewAdapterMantenimientos(getApplicationContext(), mantenimientos, rvim);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(recyclerView);
     }
+
+    ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MantenimientosActivity.this);
+            builder.setTitle("Confirmación")
+                    .setMessage("Vas a borrar este mantenimiento, ¿Continuar?")
+                    .setCancelable(true)
+                    .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Integer idABorrar = mantenimientos.get(viewHolder.getAdapterPosition()).getId();
+                            BorrarMantenimientos borrarMantenimientos = new BorrarMantenimientos();
+                            borrarMantenimientos.execute(idABorrar);
+                        }
+                    })
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .show();
+        }
+    };
 
     private class LeerMantenimientos extends AsyncTask<Void, Void, List<Mantenimiento>> implements RecyclerViewInterfaceMantenimientos {
         @Override
@@ -93,6 +131,19 @@ public class MantenimientosActivity extends AppCompatActivity {
             intent.putExtra("SELECTED_MAINTENANCE", mantenimientos.get(position).getId());
             intent.putExtra("SELECTED_VEHICLE", idVehiculo);
             startActivity(intent);
+        }
+    }
+
+    private class BorrarMantenimientos extends AsyncTask<Integer, Void, Void> {
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            AppDatabase.getAppDb(getApplicationContext()).mantenimientoRepository().deleteById(integers[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            Toast.makeText(MantenimientosActivity.this, "Mantenimiento borrado con éxito", Toast.LENGTH_SHORT).show();
         }
     }
 

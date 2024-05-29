@@ -15,7 +15,9 @@ public interface RecordatorioRepository {
 
     @Query("SELECT * FROM TRecordatorios where mantenimientoId LIKE :mantenimientoId")
     List<Recordatorio> findByMantenimientoId(int mantenimientoId);
-
     @Query("SELECT * FROM TRecordatorios")
     List<Recordatorio> findAll();
+
+    @Query("DELETE FROM TRecordatorios where id LIKE :id")
+    void deleteById(int id);
 }

@@ -1,15 +1,18 @@
 package com.example.memorauto;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -17,8 +20,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.memorauto.db.CargadorVehiculos;
+import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.db.entity.Recordatorio;
 import com.example.memorauto.db.entity.Vehiculo;
@@ -77,7 +82,40 @@ public class MainActivity extends AppCompatActivity {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getApplicationContext(), vehiculos, rvi);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(recyclerView);
     }
+
+    ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Confirmación")
+                    .setMessage("Vas a borrar este vehículo, ¿Continuar?")
+                    .setCancelable(true)
+                    .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Integer idABorrar = vehiculos.get(viewHolder.getAdapterPosition()).getId();
+                            BorrarVehiculos borrarVehiculos = new BorrarVehiculos();
+                            borrarVehiculos.execute(idABorrar);
+                        }
+                    })
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .show();
+        }
+    };
 
     private boolean compararFechas(GregorianCalendar fechaRecordatorio) {
         GregorianCalendar fechaActual = new GregorianCalendar();
@@ -164,6 +202,19 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, VehiculoActivity.class);
             intent.putExtra("SELECTED_VEHICLE", vehiculos.get(position).getId());
             startActivity(intent);
+        }
+    }
+
+    private class BorrarVehiculos extends AsyncTask<Integer, Void, Void> {
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            AppDatabase.getAppDb(getApplicationContext()).vehiculoRepository().deleteById(integers[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            Toast.makeText(MainActivity.this, "Vehículo borrado con éxito", Toast.LENGTH_SHORT).show();
         }
     }
 
