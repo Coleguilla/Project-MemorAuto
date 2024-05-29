@@ -42,7 +42,7 @@ public class RecyclerViewAdapterMantenimientos extends RecyclerView.Adapter<Recy
         String cadenaFecha = mantenimientos.get(position).getFecha().get(Calendar.DAY_OF_MONTH)+"/"+(mantenimientos.get(position).getFecha().get(Calendar.MONTH) + 1)+"/"+mantenimientos.get(position).getFecha().get(Calendar.YEAR);
         holder.tvFecha.setText(cadenaFecha);
         holder.tvOdometro.setText(String.valueOf(mantenimientos.get(position).getOdometro()));
-        //holder.ivAuto.setImageResource(R.drawable.icon_car);
+        holder.ivAlerta.setImageResource(R.drawable.icon_alert);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class RecyclerViewAdapterMantenimientos extends RecyclerView.Adapter<Recy
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombre, tvTipo, tvFecha, tvOdometro;
-        //ImageView ivAuto;
+        ImageView ivAlerta;
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterfaceMantenimientos recyclerViewInterfaceMantenimientos) {
             super(itemView);
@@ -60,7 +60,7 @@ public class RecyclerViewAdapterMantenimientos extends RecyclerView.Adapter<Recy
             tvTipo = itemView.findViewById(R.id.rvm_tv_tipo);
             tvFecha = itemView.findViewById(R.id.rvm_tv_fecha);
             tvOdometro = itemView.findViewById(R.id.rvm_tv_odometro);
-            //ivAuto = itemView.findViewById(R.id.rvv_imageview);
+            ivAlerta = itemView.findViewById(R.id.rvm_imageview);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
