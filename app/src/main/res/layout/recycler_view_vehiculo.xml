@@ -62,13 +62,13 @@
 
             <ImageView
                 android:id="@+id/rvv_imageview"
-                android:layout_width="100dp"
+                android:layout_width="135dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/icon_car" />
+                app:srcCompat="@drawable/icono_vehiculos" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

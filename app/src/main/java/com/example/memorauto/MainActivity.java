@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         String cadenaNotificacion = "Tienes un recordatorio para tu vehículo " + nombreVehiculo.toUpperCase() + ". Revisa el mantenimiento \"" + nombreMant.toUpperCase() + "\", de tipo " + tipoMant.toUpperCase();
         Intent intent = new Intent(MainActivity.this, VehiculoActivity.class);
         intent.putExtra("SELECTED_VEHICLE", idVehiculo);
-        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_MUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
@@ -164,6 +164,8 @@ public class MainActivity extends AppCompatActivity {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Recordatorio")
                 .setContentText(cadenaNotificacion)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(cadenaNotificacion))
                 .setVibrate(new long[]{100, 250, 100, 500})
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);

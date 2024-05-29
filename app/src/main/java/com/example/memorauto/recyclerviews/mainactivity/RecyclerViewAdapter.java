@@ -39,7 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.tvNombre.setText(vehiculos.get(position).getNombre());
         holder.tvMarca.setText(vehiculos.get(position).getMarca());
         holder.tvModelo.setText(vehiculos.get(position).getModelo());
-        holder.ivAuto.setImageResource(R.drawable.icon_car);
+        holder.ivAuto.setImageResource(R.drawable.icono_vehiculos);
     }
 
     @Override
