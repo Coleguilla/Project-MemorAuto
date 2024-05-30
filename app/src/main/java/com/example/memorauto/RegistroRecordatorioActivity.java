@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -87,7 +88,7 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
     }
 
     private void fechaRecomendada(GregorianCalendar gc, int cantidad) {
-        gcFechaAviso = gc;
+        gcFechaAviso = new GregorianCalendar(gc.get(Calendar.YEAR), gc.get(Calendar.MONTH), gc.get(Calendar.DAY_OF_MONTH));
         gcFechaAviso.add(Calendar.MONTH, cantidad);
     }
 
