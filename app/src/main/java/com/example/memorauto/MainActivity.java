@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private boolean compararFechas(GregorianCalendar fechaRecordatorio) {
+    public boolean compararFechas(GregorianCalendar fechaRecordatorio) {
         GregorianCalendar fechaActual = new GregorianCalendar();
 
         fechaActual.set(Calendar.HOUR_OF_DAY, 0);
@@ -131,10 +131,8 @@ public class MainActivity extends AppCompatActivity {
         fechaRecordatorio.set(Calendar.MILLISECOND, 0);
 
         if (fechaActual.equals(fechaRecordatorio)) {
-            Log.d("ALARMA", "La notificacion es real");
             return true;
         } else {
-            Log.d("OFF", "No pasa nada");
             return false;
         }
     }
@@ -144,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
             for (Mantenimiento mantenimiento : vehiculo.getMantenimientos()) {
                 for (Recordatorio recordatorio : mantenimiento.getRecordatorios()) {
                     if (compararFechas(recordatorio.getFechaAviso())) {
-                        Log.d("QUIEN", "El vehiculo: " + vehiculo.getNombre() + ", el mantenimiento: " + mantenimiento.getNombre() + ", de tipo: " + mantenimiento.getTipo());
                         notificar(vehiculo.getId(), vehiculo.getNombre(), mantenimiento.getNombre(), mantenimiento.getTipo());
                     }
                 }
@@ -156,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         String cadenaNotificacion = "Tienes un recordatorio para tu vehículo " + nombreVehiculo.toUpperCase() + ". Revisa el mantenimiento \"" + nombreMant.toUpperCase() + "\", de tipo " + tipoMant.toUpperCase();
         Intent intent = new Intent(MainActivity.this, VehiculoActivity.class);
         intent.putExtra("SELECTED_VEHICLE", idVehiculo);
-        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)

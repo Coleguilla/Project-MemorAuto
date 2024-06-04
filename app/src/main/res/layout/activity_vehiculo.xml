@@ -194,6 +194,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/av_tv_detalles"
+                style="@style/TextAppTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="288dp"
+                android:layout_marginTop="16dp"
+                android:text="ver detalles"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/av_tv_fec"
                 style="@style/TextAppTheme"
                 android:layout_width="wrap_content"
