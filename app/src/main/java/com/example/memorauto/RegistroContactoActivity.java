@@ -1,26 +1,21 @@
 package com.example.memorauto;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Contacto;
-import com.example.memorauto.db.entity.Vehiculo;
 import com.example.memorauto.db.entity.VehiculoContacto;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class RegistroContactoActivity extends AppCompatActivity {
 
@@ -60,14 +55,11 @@ public class RegistroContactoActivity extends AppCompatActivity {
         etTelefono = findViewById(R.id.arc_et_telefono);
         etDireccion = findViewById(R.id.arc_et_direccion);
 
-        String[] opciones = {"ITV", "Cambio de aceite", "Filtro de aire", "Liquido de frenos", "Cambio de bateria", "Otros"};
+        String[] opciones = {"Taller", "Aseguradora", "Otros"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTipo.setAdapter(adapter);
-
     }
-
-
 
     public void registrarContacto(View view) {
         if (etNombre.getText().toString().equals("") | spTipo.getSelectedItem().toString().equals("") | etTelefono.getText().toString().equals("")) {
@@ -104,4 +96,5 @@ public class RegistroContactoActivity extends AppCompatActivity {
             finish();
         }
     }
+
 }

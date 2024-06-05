@@ -10,4 +10,7 @@
     <style name="ButtonAppTheme" parent="Widget.Material3.Button">
         <item name="android:textSize">20dp</item>
     </style>
+    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/bluepetrol</item>
+    </style>
 </resources>
