@@ -13,7 +13,7 @@ public interface RecordatorioRepository {
     @Insert
     void insert(Recordatorio recordatorio);
 
-    @Query("SELECT * FROM TRecordatorios where mantenimientoId LIKE :mantenimientoId")
+    @Query("SELECT * FROM TRecordatorios where mantenimientoId LIKE :mantenimientoId ORDER BY fechaAviso ASC")
     List<Recordatorio> findByMantenimientoId(int mantenimientoId);
     @Query("SELECT * FROM TRecordatorios")
     List<Recordatorio> findAll();

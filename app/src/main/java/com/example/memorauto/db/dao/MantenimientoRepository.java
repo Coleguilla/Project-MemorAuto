@@ -13,7 +13,7 @@ public interface MantenimientoRepository {
     @Insert
     void insert(Mantenimiento mantenimiento);
 
-    @Query("SELECT * FROM TMantenimientos where vehiculoId LIKE :vehiculoId")
+    @Query("SELECT * FROM TMantenimientos where vehiculoId LIKE :vehiculoId ORDER BY fecha DESC")
     List<Mantenimiento> findByVehiculoId(int vehiculoId);
     @Query("SELECT * FROM TMantenimientos")
     List<Mantenimiento> findAll();
