@@ -19,4 +19,7 @@ public interface ContactoRepository {
 
     @Query("SELECT * FROM TContactos WHERE id = (SELECT MAX(id) FROM TContactos)")
     Contacto findLastContacto();
+
+    @Query("DELETE FROM TContactos where id LIKE :id")
+    void deleteById(int id);
 }

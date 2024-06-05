@@ -21,7 +21,7 @@
                 android:id="@+id/mc_anadirexistente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:title="Añadir existente" />
+                android:title="Lista de contactos" />
         </menu>
     </item>
 </menu>

@@ -22,6 +22,7 @@ import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Contacto;
 import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.recyclerviews.contactos.RecyclerViewAdapterContactos;
+import com.example.memorauto.recyclerviews.contactos.RecyclerViewInterfaceContactos;
 import com.example.memorauto.recyclerviews.mantenimientos.RecyclerViewAdapterMantenimientos;
 import com.example.memorauto.recyclerviews.mantenimientos.RecyclerViewInterfaceMantenimientos;
 
@@ -74,18 +75,18 @@ public class ContactosActivity extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.mc_anadirexistente) {
             Log.d("TEST", "apretado boton contacto existente");
-          //  Intent intent = new Intent(this, RegistroMantenimientoActivity.class);
-           // intent.putExtra("SELECTED_VEHICLE", idVehiculo);
-           // startActivity(intent);
+            Intent intent = new Intent(this, RegistroContactoExistenteActivity.class);
+            intent.putExtra("SELECTED_VEHICLE", idVehiculo);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void configRecyclerView() {
+    private void configRecyclerView(RecyclerViewInterfaceContactos rvic) {
         RecyclerView recyclerView = findViewById(R.id.ac_recyclerview);
         registerForContextMenu(recyclerView);
-        RecyclerViewAdapterContactos adapter = new RecyclerViewAdapterContactos(getApplicationContext(), contactos);
+        RecyclerViewAdapterContactos adapter = new RecyclerViewAdapterContactos(getApplicationContext(), contactos, rvic);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
@@ -103,15 +104,14 @@ public class ContactosActivity extends AppCompatActivity {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             AlertDialog.Builder builder = new AlertDialog.Builder(ContactosActivity.this);
             builder.setTitle("Confirmación")
-                    .setMessage("Vas a borrar este mantenimiento, ¿Continuar?")
+                    .setMessage("Vas a borrar este contacto para este vehículo, ¿Continuar?")
                     .setCancelable(true)
                     .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Log.d("TEST", "el borrado funciona");
-                          //  Integer idABorrar = mantenimientos.get(viewHolder.getAdapterPosition()).getId();
-                          //  MantenimientosActivity.BorrarMantenimientos borrarMantenimientos = new MantenimientosActivity.BorrarMantenimientos();
-                          //  borrarMantenimientos.execute(idABorrar);
+                            Integer idABorrar = contactos.get(viewHolder.getAdapterPosition()).getId();
+                            BorrarContactos borrarContactos = new BorrarContactos();
+                            borrarContactos.execute(idABorrar);
                         }
                     })
                     .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -124,14 +124,9 @@ public class ContactosActivity extends AppCompatActivity {
         }
     };
 
-    private class LeerContactos extends AsyncTask<Void, Void, List<Contacto>> {
+    private class LeerContactos extends AsyncTask<Void, Void, List<Contacto>> implements RecyclerViewInterfaceContactos{
         @Override
         protected List<Contacto> doInBackground(Void... voids) {
-            /*contactos = AppDatabase.getAppDb(getApplicationContext()).contactoRepository().findAll();
-            for (Contacto c: contactos) {
-                Log.d("TEST", "CONTACTO: " + c.getNombre()+" . "+c.getTipo()+" . "+c.getTelefono()+" . "+c.getDireccion());
-            }*/
-
             contactos = AppDatabase.getAppDb(getApplicationContext()).vehiculoContactoRepository().findContactosByVehiculo(idVehiculo);
             return contactos;
         }
@@ -139,22 +134,25 @@ public class ContactosActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Contacto> contactos) {
             configToolbar();
-            configRecyclerView();
+            configRecyclerView(this);
         }
 
+        @Override
+        public void onItemClick(int position) {
+        }
     }
-/*
-    private class BorrarMantenimientos extends AsyncTask<Integer, Void, Void> {
+
+    private class BorrarContactos extends AsyncTask<Integer, Void, Void> {
         @Override
         protected Void doInBackground(Integer... integers) {
-            AppDatabase.getAppDb(getApplicationContext()).mantenimientoRepository().deleteById(integers[0]);
+            AppDatabase.getAppDb(getApplicationContext()).vehiculoContactoRepository().deleteById(integers[0]);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void unused) {
-            Toast.makeText(MantenimientosActivity.this, "Mantenimiento borrado con éxito", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ContactosActivity.this, "Contacto borrado con éxito", Toast.LENGTH_SHORT).show();
         }
     }
-*/
+
 }

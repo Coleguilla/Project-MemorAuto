@@ -31,7 +31,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE;
     public static AppDatabase getAppDb(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "DB_memorauto_dev5").build();
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "DB_memorauto_dev7").build();
         }
         return INSTANCE;
     }

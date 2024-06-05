@@ -17,4 +17,7 @@ public interface VehiculoContactoRepository {
 
     @Query("SELECT * FROM TContactos INNER JOIN TVehiculosContactos ON TContactos.id=TVehiculosContactos.contactoId WHERE TVehiculosContactos.vehiculoId = :vehiculoId")
     List<Contacto> findContactosByVehiculo(int vehiculoId);
+
+    @Query("DELETE FROM TVehiculosContactos where id LIKE :id")
+    void deleteById(int id);
 }

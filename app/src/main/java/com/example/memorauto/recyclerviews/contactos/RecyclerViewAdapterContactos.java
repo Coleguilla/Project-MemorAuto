@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.memorauto.R;
 import com.example.memorauto.db.entity.Contacto;
 import com.example.memorauto.db.entity.Mantenimiento;
+import com.example.memorauto.recyclerviews.mantenimientos.RecyclerViewInterfaceMantenimientos;
 
 import java.util.Calendar;
 import java.util.List;
@@ -20,10 +21,12 @@ import java.util.List;
 public class RecyclerViewAdapterContactos extends RecyclerView.Adapter<RecyclerViewAdapterContactos.MyViewHolder> {
     Context context;
     List<Contacto> contactos;
+    private final RecyclerViewInterfaceContactos recyclerViewInterfaceContactos;
 
-    public RecyclerViewAdapterContactos(Context context, List<Contacto> contactos) {
+    public RecyclerViewAdapterContactos(Context context, List<Contacto> contactos, RecyclerViewInterfaceContactos recyclerViewInterfaceContactos) {
         this.context = context;
         this.contactos = contactos;
+        this.recyclerViewInterfaceContactos = recyclerViewInterfaceContactos;
     }
 
     @NonNull
@@ -31,7 +34,7 @@ public class RecyclerViewAdapterContactos extends RecyclerView.Adapter<RecyclerV
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_view_contacto, parent, false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, recyclerViewInterfaceContactos);
     }
 
     @Override
@@ -50,13 +53,25 @@ public class RecyclerViewAdapterContactos extends RecyclerView.Adapter<RecyclerV
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombre, tvTipo, tvTelefono, tvDireccion;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewInterfaceContactos recyclerViewInterfaceContactos) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.rvc_tv_nombre);
             tvTipo = itemView.findViewById(R.id.rvc_tv_tipo);
             tvTelefono = itemView.findViewById(R.id.rvc_tv_telefono);
             tvDireccion = itemView.findViewById(R.id.rvc_tv_direccion);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (recyclerViewInterfaceContactos != null){
+                        int pos = getAdapterPosition();
+                        if(pos != RecyclerView.NO_POSITION) {
+                            recyclerViewInterfaceContactos.onItemClick(pos);
+                        }
+                    }
+
+                }
+            });
         }
     }
 }

@@ -1,13 +1,18 @@
 package com.example.memorauto.db.entity;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
-@Entity(tableName = "TVehiculosContactos", primaryKeys = {"vehiculoId", "contactoId"}, foreignKeys = {
-        @ForeignKey(entity = Vehiculo.class, parentColumns = "id", childColumns = "vehiculoId"),
-        @ForeignKey(entity = Contacto.class, parentColumns = "id", childColumns = "contactoId")
+@Entity(tableName = "TVehiculosContactos", foreignKeys = {
+        @ForeignKey(entity = Vehiculo.class, parentColumns = "id", childColumns = "vehiculoId", onDelete = CASCADE),
+        @ForeignKey(entity = Contacto.class, parentColumns = "id", childColumns = "contactoId", onDelete = CASCADE)
 })
 public class VehiculoContacto {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private int vehiculoId;
     private int contactoId;
 
@@ -19,6 +24,14 @@ public class VehiculoContacto {
     }
 
     //...
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getVehiculoId() {
         return vehiculoId;

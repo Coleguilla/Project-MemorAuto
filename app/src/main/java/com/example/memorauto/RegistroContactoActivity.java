@@ -44,6 +44,14 @@ public class RegistroContactoActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Registro de contacto");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegistroContactoActivity.this, ContactosActivity.class);
+                intent.putExtra("SELECTED_VEHICLE", idVehiculo);
+                startActivity(intent);
+            }
+        });
     }
 
     private void configView() {
