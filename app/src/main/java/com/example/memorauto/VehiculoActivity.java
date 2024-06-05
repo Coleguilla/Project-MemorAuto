@@ -80,6 +80,12 @@ public class VehiculoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void lanzarContactos(View view) {
+        Intent intent = new Intent(this, ContactosActivity.class);
+        intent.putExtra("SELECTED_VEHICLE", vehiculo.getId());
+        startActivity(intent);
+    }
+
     private class LeerVehiculo extends AsyncTask<Void, Void, Vehiculo> implements RecyclerViewInterfaceFichaMantenimientos {
         @Override
         protected Vehiculo doInBackground(Void... voids) {
