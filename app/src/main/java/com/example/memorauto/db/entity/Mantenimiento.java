@@ -22,6 +22,8 @@ public class Mantenimiento implements Serializable {
     private int vehiculoId;
     @Ignore
     private List<Recordatorio> recordatorios;
+    @Ignore
+    private Vehiculo vehiculo;
 
     //...
 
@@ -88,5 +90,13 @@ public class Mantenimiento implements Serializable {
 
     public void setRecordatorios(List<Recordatorio> recordatorios) {
         this.recordatorios = recordatorios;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 }

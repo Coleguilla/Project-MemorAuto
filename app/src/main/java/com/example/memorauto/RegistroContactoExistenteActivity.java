@@ -55,7 +55,6 @@ public class RegistroContactoExistenteActivity extends AppCompatActivity {
 
     private void configRecyclerView(RecyclerViewInterfaceContactos rvic) {
         RecyclerView recyclerView = findViewById(R.id.arce_recyclerview);
-        registerForContextMenu(recyclerView);
         RecyclerViewAdapterContactos adapter = new RecyclerViewAdapterContactos(getApplicationContext(), contactos, rvic);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -117,7 +116,6 @@ public class RegistroContactoExistenteActivity extends AppCompatActivity {
     }
 
     private class EjecutarRegistro extends AsyncTask<VehiculoContacto, Void, Void> {
-
         @Override
         protected Void doInBackground(VehiculoContacto... vehiculosContactos) {
             AppDatabase.getAppDb(getApplicationContext()).vehiculoContactoRepository().insert(vehiculosContactos[0]);

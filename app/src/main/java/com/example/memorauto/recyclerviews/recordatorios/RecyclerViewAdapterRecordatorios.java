@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memorauto.R;
-import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.db.entity.Recordatorio;
 
 import java.util.Calendar;

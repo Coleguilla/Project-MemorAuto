@@ -1,5 +1,14 @@
 package com.example.memorauto;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,23 +17,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Contacto;
-import com.example.memorauto.db.entity.Mantenimiento;
 import com.example.memorauto.recyclerviews.contactos.RecyclerViewAdapterContactos;
 import com.example.memorauto.recyclerviews.contactos.RecyclerViewInterfaceContactos;
-import com.example.memorauto.recyclerviews.mantenimientos.RecyclerViewAdapterMantenimientos;
-import com.example.memorauto.recyclerviews.mantenimientos.RecyclerViewInterfaceMantenimientos;
 
 import java.util.List;
 
@@ -67,14 +63,12 @@ public class ContactosActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.mc_nuevocontacto) {
-            Log.d("TEST", "apretado boton nuevo contacto");
             Intent intent = new Intent(this, RegistroContactoActivity.class);
             intent.putExtra("SELECTED_VEHICLE", idVehiculo);
             startActivity(intent);
             return true;
         }
         if (item.getItemId() == R.id.mc_anadirexistente) {
-            Log.d("TEST", "apretado boton contacto existente");
             Intent intent = new Intent(this, RegistroContactoExistenteActivity.class);
             intent.putExtra("SELECTED_VEHICLE", idVehiculo);
             startActivity(intent);
@@ -85,7 +79,6 @@ public class ContactosActivity extends AppCompatActivity {
 
     private void configRecyclerView(RecyclerViewInterfaceContactos rvic) {
         RecyclerView recyclerView = findViewById(R.id.ac_recyclerview);
-        registerForContextMenu(recyclerView);
         RecyclerViewAdapterContactos adapter = new RecyclerViewAdapterContactos(getApplicationContext(), contactos, rvic);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

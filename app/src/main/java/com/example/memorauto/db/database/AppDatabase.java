@@ -1,6 +1,5 @@
 package com.example.memorauto.db.database;
 
-
 import android.content.Context;
 
 import androidx.room.Database;
@@ -31,7 +30,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE;
     public static AppDatabase getAppDb(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "DB_memorauto_dev7").build();
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "DB_memorauto_prod_v1").build();
         }
         return INSTANCE;
     }

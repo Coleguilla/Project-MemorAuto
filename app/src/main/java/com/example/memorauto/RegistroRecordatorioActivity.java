@@ -1,18 +1,17 @@
 package com.example.memorauto;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Mantenimiento;
@@ -66,19 +65,19 @@ public class RegistroRecordatorioActivity extends AppCompatActivity {
             String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
             tvConsejo.setText(cadenaFRecomendada);
         } else if (mantenimiento != null && mantenimiento.getTipo().equals("Cambio de aceite")) {
-            fechaRecomendada(mantenimiento.getFecha(), 6);
-            String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
-            tvConsejo.setText(cadenaFRecomendada);
-        } else if (mantenimiento != null && mantenimiento.getTipo().equals("Filtro de aire")) {
-            fechaRecomendada(mantenimiento.getFecha(), 8);
-            String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
-            tvConsejo.setText(cadenaFRecomendada);
-        } else if (mantenimiento != null && mantenimiento.getTipo().equals("Liquido de frenos")) {
             fechaRecomendada(mantenimiento.getFecha(), 18);
             String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
             tvConsejo.setText(cadenaFRecomendada);
-        } else if (mantenimiento != null && mantenimiento.getTipo().equals("Cambio de bateria")) {
+        } else if (mantenimiento != null && mantenimiento.getTipo().equals("Filtro de aire")) {
+            fechaRecomendada(mantenimiento.getFecha(), 12);
+            String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
+            tvConsejo.setText(cadenaFRecomendada);
+        } else if (mantenimiento != null && mantenimiento.getTipo().equals("Liquido de frenos")) {
             fechaRecomendada(mantenimiento.getFecha(), 24);
+            String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
+            tvConsejo.setText(cadenaFRecomendada);
+        } else if (mantenimiento != null && mantenimiento.getTipo().equals("Cambio de bateria")) {
+            fechaRecomendada(mantenimiento.getFecha(), 48);
             String cadenaFRecomendada = "Tu mantenimiento es de tipo: \n" + mantenimiento.getTipo().toUpperCase() + "\n\n" + "Recomendamos que el recordatorio sea: \n" + convertirFechaString(gcFechaAviso);
             tvConsejo.setText(cadenaFRecomendada);
         } else {

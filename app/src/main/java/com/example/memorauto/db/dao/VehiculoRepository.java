@@ -1,15 +1,11 @@
 package com.example.memorauto.db.dao;
 
-
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.example.memorauto.db.entity.Vehiculo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao

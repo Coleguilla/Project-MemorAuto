@@ -11,7 +11,6 @@ import java.util.List;
 
 @Dao
 public interface VehiculoContactoRepository {
-
     @Insert
     void insert(VehiculoContacto vehiculoContacto);
 

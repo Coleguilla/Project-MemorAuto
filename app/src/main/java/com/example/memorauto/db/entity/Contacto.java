@@ -1,7 +1,10 @@
 package com.example.memorauto.db.entity;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import java.util.List;
 
 @Entity(tableName = "TContactos")
 public class Contacto {
@@ -11,6 +14,8 @@ public class Contacto {
     private String tipo;
     private int telefono;
     private String direccion;
+    @Ignore
+    private List<VehiculoContacto> vehiculosContactos;
 
     //...
 
@@ -59,5 +64,13 @@ public class Contacto {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public List<VehiculoContacto> getVehiculosContactos() {
+        return vehiculosContactos;
+    }
+
+    public void setVehiculosContactos(List<VehiculoContacto> vehiculosContactos) {
+        this.vehiculosContactos = vehiculosContactos;
     }
 }

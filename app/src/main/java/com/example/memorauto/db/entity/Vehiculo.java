@@ -1,7 +1,6 @@
 package com.example.memorauto.db.entity;
 
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -22,6 +21,8 @@ public class Vehiculo implements Serializable {
     private GregorianCalendar fecha_compra;
     @Ignore
     private List<Mantenimiento> mantenimientos;
+    @Ignore
+    private List<VehiculoContacto> vehiculosContactos;
 
     //...
 
@@ -103,5 +104,13 @@ public class Vehiculo implements Serializable {
 
     public void setMantenimientos(List<Mantenimiento> mantenimientos) {
         this.mantenimientos = mantenimientos;
+    }
+
+    public List<VehiculoContacto> getVehiculosContactos() {
+        return vehiculosContactos;
+    }
+
+    public void setVehiculosContactos(List<VehiculoContacto> vehiculosContactos) {
+        this.vehiculosContactos = vehiculosContactos;
     }
 }

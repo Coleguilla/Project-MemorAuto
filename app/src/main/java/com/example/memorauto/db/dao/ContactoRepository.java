@@ -10,13 +10,11 @@ import java.util.List;
 
 @Dao
 public interface ContactoRepository {
-
     @Insert
     void insert(Contacto contacto);
 
     @Query("SELECT * FROM TContactos")
     List<Contacto> findAll();
-
     @Query("SELECT * FROM TContactos WHERE id = (SELECT MAX(id) FROM TContactos)")
     Contacto findLastContacto();
 

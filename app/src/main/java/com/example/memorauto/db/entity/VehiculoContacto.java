@@ -4,6 +4,7 @@ import static androidx.room.ForeignKey.CASCADE;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "TVehiculosContactos", foreignKeys = {
@@ -15,6 +16,10 @@ public class VehiculoContacto {
     private int id;
     private int vehiculoId;
     private int contactoId;
+    @Ignore
+    private Vehiculo vehiculo;
+    @Ignore
+    private Contacto contacto;
 
     //...
 
@@ -47,5 +52,21 @@ public class VehiculoContacto {
 
     public void setContactoId(int contactoId) {
         this.contactoId = contactoId;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public Contacto getContacto() {
+        return contacto;
+    }
+
+    public void setContacto(Contacto contacto) {
+        this.contacto = contacto;
     }
 }

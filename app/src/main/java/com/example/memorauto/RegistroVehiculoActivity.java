@@ -1,8 +1,5 @@
 package com.example.memorauto;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,6 +8,9 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.memorauto.db.database.AppDatabase;
 import com.example.memorauto.db.entity.Vehiculo;
@@ -87,7 +87,6 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
     }
 
     private class EjecutarRegistro extends AsyncTask<Vehiculo, Void, Void> {
-
         @Override
         protected Void doInBackground(Vehiculo... vehiculos) {
             AppDatabase.getAppDb(getApplicationContext()).vehiculoRepository().insert(vehiculos[0]);
